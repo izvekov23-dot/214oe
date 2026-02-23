@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OneUnion v3.0 × Осознанное Единство</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Nunito+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#f4f2ee;--bg-card:#ffffff;--bg-side:#0d2137;--bg-side-hover:#163050;
+  --teal:#2ec4b6;--teal-soft:rgba(46,196,182,.1);--teal-mid:rgba(46,196,182,.25);
+  --gold:#d4a843;--gold-soft:rgba(212,168,67,.1);--gold-glow:rgba(212,168,67,.3);
+  --blue:#3b82f6;--blue-soft:rgba(59,130,246,.08);
+  --emerald:#10b981;--emerald-soft:rgba(16,185,129,.1);
+  --rose:#f472b6;--rose-soft:rgba(244,114,182,.1);
+  --violet:#8b5cf6;--violet-soft:rgba(139,92,246,.1);
+  --warm:#f59e0b;--warm-soft:rgba(245,158,11,.1);
+  --red:#ef4444;--red-soft:rgba(239,68,68,.08);
+  --txt:#1e293b;--txt-dim:#64748b;--txt-light:#94a3b8;
+  --border:#e2e8f0;--border-strong:#cbd5e1;
+  --radius:12px;--radius-sm:8px;--radius-lg:20px;
+  --shadow:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.04);
+  --shadow-lg:0 8px 32px rgba(0,0,0,.08);
+  --shadow-xl:0 16px 48px rgba(0,0,0,.12);
+  --tr:.25s cubic-bezier(.4,0,.2,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:15px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'Nunito Sans',sans-serif;line-height:1.6;overflow-x:hidden;min-height:100vh}
+
+/* LAYOUT */
+.app{display:flex;min-height:100vh}
+.sidebar{width:220px;background:var(--bg-side);color:#e2e8f0;position:fixed;top:0;left:0;bottom:0;z-index:100;display:flex;flex-direction:column;transition:var(--tr)}
+.sidebar-logo{padding:20px 16px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sidebar-logo svg{width:38px;height:38px}
+.sidebar-logo span{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;color:#fff;letter-spacing:-.01em}
+.sidebar-logo small{display:block;font-family:'Nunito Sans',sans-serif;font-size:.65rem;font-weight:400;color:var(--teal);letter-spacing:.08em;text-transform:uppercase}
+.sidebar nav{flex:1;padding:12px 8px;overflow-y:auto}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:var(--radius-sm);color:#94a3b8;font-size:.88rem;font-weight:500;cursor:pointer;transition:var(--tr);margin-bottom:2px;position:relative}
+.nav-item:hover{background:var(--bg-side-hover);color:#e2e8f0}
+.nav-item.active{background:linear-gradient(135deg,var(--teal),#1a9e93);color:#fff;box-shadow:0 2px 12px rgba(46,196,182,.3)}
+.nav-item .badge{position:absolute;right:10px;background:var(--red);color:#fff;font-size:.65rem;font-weight:700;padding:1px 6px;border-radius:10px}
+.nav-item svg{width:20px;height:20px;flex-shrink:0;opacity:.7}
+.nav-item.active svg{opacity:1}
+.nav-divider{height:1px;background:rgba(255,255,255,.06);margin:8px 14px}
+.nav-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#4a6380;padding:8px 14px 4px}
+.sidebar-footer{padding:12px 16px;border-top:1px solid rgba(255,255,255,.08);font-size:.72rem;color:#4a6380}
+.sidebar-footer a{color:var(--teal);text-decoration:none}
+
+.main{margin-left:220px;flex:1;min-height:100vh}
+.topbar{height:56px;background:var(--bg-card);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:50}
+.topbar-search{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:24px;padding:6px 16px;width:340px}
+.topbar-search input{border:none;background:none;outline:none;font-family:inherit;font-size:.88rem;color:var(--txt);width:100%}
+.topbar-right{display:flex;align-items:center;gap:16px}
+.topbar-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:var(--tr);color:var(--txt-dim)}
+.topbar-icon:hover{background:var(--teal-soft);color:var(--teal)}
+.avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--blue));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.8rem;cursor:pointer}
+
+.content{padding:24px;max-width:1200px}
+.page{display:none}
+.page.active{display:block}
+
+/* CARDS */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);transition:var(--tr)}
+.card:hover{box-shadow:var(--shadow-lg)}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:var(--txt);margin-bottom:8px}
+.card-subtitle{font-size:.82rem;color:var(--txt-dim);margin-bottom:12px}
+
+/* GRID */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.grid-main{display:grid;grid-template-columns:1fr 320px;gap:24px}
+
+/* TAGS */
+.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:600;margin:2px}
+.tag-teal{background:var(--teal-soft);color:var(--teal)}
+.tag-gold{background:var(--gold-soft);color:var(--gold)}
+.tag-blue{background:var(--blue-soft);color:var(--blue)}
+.tag-emerald{background:var(--emerald-soft);color:var(--emerald)}
+.tag-violet{background:var(--violet-soft);color:var(--violet)}
+.tag-rose{background:var(--rose-soft);color:var(--rose)}
+.tag-warm{background:var(--warm-soft);color:var(--warm)}
+
+/* BUTTONS */
+.btn{padding:8px 20px;border-radius:var(--radius-sm);border:none;font-family:inherit;font-weight:600;font-size:.85rem;cursor:pointer;transition:var(--tr)}
+.btn-primary{background:linear-gradient(135deg,var(--teal),#1a9e93);color:#fff;box-shadow:0 2px 8px rgba(46,196,182,.25)}
+.btn-primary:hover{box-shadow:0 4px 16px rgba(46,196,182,.4);transform:translateY(-1px)}
+.btn-outline{background:transparent;border:1.5px solid var(--teal);color:var(--teal)}
+.btn-outline:hover{background:var(--teal-soft)}
+.btn-gold{background:linear-gradient(135deg,var(--gold),#c49530);color:#fff}
+
+/* METRIC */
+.metric{text-align:center;padding:16px}
+.metric-val{font-size:1.8rem;font-weight:800;font-family:'Cormorant Garamond',serif}
+.metric-label{font-size:.75rem;color:var(--txt-dim);margin-top:2px}
+.metric-change{font-size:.72rem;font-weight:700;margin-top:4px}
+.metric-change.up{color:var(--emerald)}
+.metric-change.down{color:var(--red)}
+
+/* PROGRESS */
+.progress{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;border-radius:3px;transition:width .6s ease}
+
+/* FUND BAR */
+.fund-bar{display:flex;border-radius:8px;overflow:hidden;height:32px;margin:8px 0}
+.fund-seg{display:flex;align-items:center;justify-content:center;color:#fff;font-size:.72rem;font-weight:700;transition:var(--tr)}
+
+/* WHEEL */
+.wheel-container{position:relative;width:260px;height:260px;margin:0 auto}
+.wheel-canvas{width:260px;height:260px}
+.wheel-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.wheel-score{font-size:2rem;font-weight:800;font-family:'Cormorant Garamond',serif;color:var(--teal)}
+.wheel-label{font-size:.7rem;color:var(--txt-dim)}
+
+/* COORDINATOR FAB */
+.coordinator-fab{position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--teal),#1a9e93);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 20px rgba(46,196,182,.4);z-index:200;transition:var(--tr);animation:fab-pulse 3s infinite}
+.coordinator-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(46,196,182,.5)}
+.coordinator-fab svg{width:28px;height:28px}
+@keyframes fab-pulse{0%,100%{box-shadow:0 4px 20px rgba(46,196,182,.4)}50%{box-shadow:0 4px 20px rgba(46,196,182,.4),0 0 0 8px rgba(46,196,182,.1)}}
+
+/* CHAT PANEL */
+.chat-panel{position:fixed;bottom:92px;right:24px;width:400px;height:520px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-xl);z-index:200;display:none;flex-direction:column;overflow:hidden}
+.chat-panel.open{display:flex;animation:slideUp .3s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.chat-header{padding:14px 18px;background:linear-gradient(135deg,var(--bg-side),#163050);color:#fff;display:flex;align-items:center;justify-content:space-between}
+.chat-header-left{display:flex;align-items:center;gap:10px}
+.chat-header-left .dot{width:10px;height:10px;border-radius:50%;background:var(--teal);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+.chat-body{flex:1;overflow-y:auto;padding:16px}
+.chat-msg{margin-bottom:14px;max-width:85%}
+.chat-msg.bot{margin-right:auto}
+.chat-msg.user{margin-left:auto}
+.chat-bubble{padding:10px 14px;border-radius:14px;font-size:.85rem;line-height:1.5}
+.chat-msg.bot .chat-bubble{background:var(--bg);border:1px solid var(--border);color:var(--txt)}
+.chat-msg.user .chat-bubble{background:linear-gradient(135deg,var(--teal),#1a9e93);color:#fff}
+.chat-time{font-size:.65rem;color:var(--txt-light);margin-top:3px;padding:0 4px}
+.chat-msg.user .chat-time{text-align:right}
+.chat-input-area{padding:12px 16px;border-top:1px solid var(--border);display:flex;gap:8px;align-items:center}
+.chat-input{flex:1;border:1px solid var(--border);border-radius:24px;padding:8px 16px;font-family:inherit;font-size:.85rem;outline:none;transition:var(--tr)}
+.chat-input:focus{border-color:var(--teal)}
+.chat-send{width:36px;height:36px;border-radius:50%;background:var(--teal);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.chat-mic{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--border);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--txt-dim);transition:var(--tr)}
+.chat-mic:hover{border-color:var(--teal);color:var(--teal)}
+.specialist-card{background:var(--teal-soft);border:1px solid var(--teal-mid);border-radius:var(--radius-sm);padding:10px 12px;margin-top:8px}
+.specialist-card h4{font-size:.85rem;color:var(--teal);font-weight:700}
+.specialist-card p{font-size:.75rem;color:var(--txt-dim);margin-top:2px}
+
+/* MAP */
+.map-container{position:relative;background:linear-gradient(145deg,#e8f0f2,#f0ece4);border-radius:var(--radius);height:480px;overflow:hidden;border:1px solid var(--border)}
+.map-container svg{width:100%;height:100%}
+.map-point{cursor:pointer;transition:var(--tr)}
+.map-point:hover{transform:scale(1.2)}
+.map-overlay{position:absolute;bottom:16px;left:16px;right:16px;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-radius:var(--radius);padding:14px 18px;box-shadow:var(--shadow-lg)}
+
+/* SVO PROGRAM */
+.svo-hero{background:linear-gradient(135deg,#0F1923,#1E3A5F);color:#fff;border-radius:var(--radius-lg);padding:32px;margin-bottom:20px;position:relative;overflow:hidden}
+.svo-hero::before{content:'';position:absolute;top:-50%;right:-20%;width:300px;height:300px;border-radius:50%;background:rgba(59,130,246,.08)}
+.svo-hero h2{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;margin-bottom:8px}
+.svo-hero p{color:#94a3b8;font-size:.9rem}
+.svo-stats{display:flex;gap:24px;margin-top:16px}
+.svo-stat{text-align:center}
+.svo-stat .val{font-size:1.5rem;font-weight:800;color:var(--teal)}
+.svo-stat .lbl{font-size:.72rem;color:#64748b}
+
+/* PROFILE LAYERS */
+.layer{border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;margin-bottom:10px;transition:var(--tr)}
+.layer:hover{border-color:var(--teal-mid);box-shadow:0 2px 12px rgba(46,196,182,.06)}
+.layer-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.layer-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.layer-name{font-weight:700;font-size:.88rem}
+.layer-pct{margin-left:auto;font-size:.75rem;font-weight:700}
+
+/* ANIMATIONS */
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeIn .5s ease both}
+.fade-in-d1{animation-delay:.1s}
+.fade-in-d2{animation-delay:.2s}
+.fade-in-d3{animation-delay:.3s}
+.fade-in-d4{animation-delay:.4s}
+
+/* RESPONSIVE */
+@media(max-width:1100px){.grid-main{grid-template-columns:1fr}.grid-4{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.sidebar{display:none}.main{margin-left:0}.grid-2,.grid-3{grid-template-columns:1fr}}
+
+/* PRODUCT CARD enhanced */
+.product-card{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--bg-card);transition:var(--tr)}
+.product-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.product-img{height:140px;background:linear-gradient(135deg,#e8dcc8,#d4c4a8);display:flex;align-items:center;justify-content:center;font-size:2.5rem}
+.product-body{padding:14px}
+.product-name{font-weight:700;font-size:.92rem;margin-bottom:2px}
+.product-seller{font-size:.78rem;color:var(--txt-dim)}
+.product-price{font-size:1.1rem;font-weight:800;color:var(--teal);margin-top:6px}
+.product-dist{margin-top:8px}
+.dist-bar{display:flex;border-radius:4px;overflow:hidden;height:6px}
+.dist-legend{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap}
+.dist-legend span{font-size:.62rem;color:var(--txt-dim)}
+
+/* COURSE CARD */
+.course-card{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--bg-card);transition:var(--tr)}
+.course-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.course-img{height:120px;display:flex;align-items:center;justify-content:center;font-size:2rem}
+.course-body{padding:14px}
+.course-title{font-weight:700;font-size:.9rem;margin-bottom:4px}
+.course-meta{font-size:.75rem;color:var(--txt-dim)}
+.course-match{display:inline-block;background:var(--emerald-soft);color:var(--emerald);font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:10px;margin-top:6px}
+
+/* HOCHU NAJTI FAB */
+/* HOCHU NAJTI FAB — circle like coordinator */
+.hochu-fab{position:fixed;bottom:90px;right:24px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#f97316,#e86a10);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 20px rgba(249,115,22,.4);z-index:200;transition:var(--tr);animation:fab-hochu 3s infinite;border:none}
+.hochu-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(249,115,22,.5)}
+.hochu-fab svg{width:28px;height:28px}
+@keyframes fab-hochu{0%,100%{box-shadow:0 4px 20px rgba(249,115,22,.4)}50%{box-shadow:0 4px 20px rgba(249,115,22,.4),0 0 0 6px rgba(249,115,22,.1)}}
+/* REQUEST PANEL */
+.request-panel{position:fixed;bottom:0;right:0;width:380px;height:520px;background:var(--bg-card);border-radius:var(--radius-lg) var(--radius-lg) 0 0;box-shadow:var(--shadow-lg);z-index:300;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);overflow:hidden}
+.request-panel.open{transform:translateY(0)}
+.request-header{background:linear-gradient(135deg,#f97316,#e86a10);color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.request-body{flex:1;overflow-y:auto;padding:16px}
+.request-input-area{display:flex;align-items:center;gap:8px;padding:12px 16px;border-top:1px solid var(--border);flex-shrink:0}
+.request-input{flex:1;border:1.5px solid rgba(249,115,22,.3);border-radius:var(--radius);padding:10px 14px;font-family:inherit;font-size:.85rem;background:var(--bg);outline:none}
+.request-input:focus{border-color:#f97316;box-shadow:0 0 0 3px rgba(249,115,22,.1)}
+.request-send{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#f97316,#e86a10);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.req-msg{margin-bottom:12px}
+.req-msg.bot .req-bubble{background:rgba(249,115,22,.06);border:1px solid rgba(249,115,22,.12);border-radius:var(--radius) var(--radius) var(--radius) 4px;padding:10px 14px;font-size:.85rem;line-height:1.5}
+.req-msg.user .req-bubble{background:linear-gradient(135deg,#f97316,#e86a10);color:#fff;border-radius:var(--radius) var(--radius) 4px var(--radius);padding:10px 14px;font-size:.85rem;margin-left:40px}
+.req-time{font-size:.68rem;color:var(--txt-light);margin-top:3px}
+.btn-orange{background:linear-gradient(135deg,#f97316,#e86a10);color:#fff;box-shadow:0 2px 8px rgba(249,115,22,.3)}
+.btn-orange:hover{box-shadow:0 4px 16px rgba(249,115,22,.4);transform:translateY(-1px)}
+
+/* REQUEST CARD */
+.request-card{background:var(--bg-card);border:1.5px solid #f97316;border-radius:var(--radius);padding:16px;transition:var(--tr);position:relative;overflow:hidden}
+.request-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:#f97316}
+.request-card:hover{box-shadow:0 4px 20px rgba(249,115,22,.15)}
+.request-status{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.7rem;font-weight:700}
+.request-status.active{background:var(--emerald-soft);color:var(--emerald)}
+.request-status.pending{background:var(--warm-soft);color:var(--warm)}
+.tag-orange{background:rgba(249,115,22,.1);color:#f97316}
+
+/* CALENDAR STRIP */
+.date-strip{display:flex;align-items:center;background:var(--bg-card);border:1px solid var(--border);border-bottom:none;padding:0 16px;height:44px;gap:2px;border-radius:var(--radius) var(--radius) 0 0}
+.date-cell{flex:1;text-align:center;padding:4px 0;cursor:pointer;transition:var(--tr);border-radius:var(--radius-sm)}
+.date-cell:hover{background:var(--teal-soft)}
+.date-cell.today{background:var(--red-soft)}
+.date-dow{font-size:.58rem;color:var(--txt-light);text-transform:uppercase;font-weight:600;letter-spacing:.05em}
+.date-num{font-size:.88rem;font-weight:800}
+.date-cell.today .date-num{color:var(--red)}
+.date-cell.today .date-dow{color:var(--red)}
+
+/* SVO PROJECT DETAIL */
+.svo-project-detail{background:#0F1923;color:#E2E8F0;border-radius:var(--radius);overflow:hidden}
+.svo-detail-card{background:#1A2634;border-radius:14px;padding:16px;margin-bottom:10px;border:1px solid #2D3B4E}
+.svo-h2{font-size:15px;font-weight:700;color:#F8FAFC;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+.svo-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:13px;color:#94A3B8}
+.svo-big{font-size:26px;font-weight:800;color:#22D3EE;letter-spacing:-.5px}
+.svo-tabs{display:flex;gap:3px;padding:12px 12px 0;overflow-x:auto}
+.svo-tab{padding:7px 12px;border-radius:10px;border:1px solid #2D3B4E;cursor:pointer;font-weight:600;font-size:12px;background:#1A2634;color:#94A3B8;white-space:nowrap;flex-shrink:0;transition:all .2s;font-family:inherit}
+.svo-tab.active{background:linear-gradient(135deg,#3B82F6,#22D3EE);color:#fff;border:none}
+.house-btn{flex:1;padding:10px 6px;text-align:center;border-radius:10px;border:1px solid #2D3B4E;cursor:pointer;background:#1A2634;color:#94A3B8;font-family:inherit;transition:all .2s}
+.house-btn.active{background:linear-gradient(135deg,#3B82F6,#22D3EE);color:#fff;border:none}
+.house-btn .label{font-size:14px;font-weight:700}
+.house-btn .price{font-size:11px;font-weight:400;opacity:.8;margin-top:2px}
+.svo-bar-wrap{display:flex;border-radius:10px;overflow:hidden}
+.svo-bar-seg{height:26px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700}
+.svo-total-box{margin-top:8px;padding:10px 12px;background:rgba(59,130,246,.13);border-radius:10px}
+.svo-divider{height:1px;background:#2D3B4E;margin:6px 0}
+.svo-stage{display:flex;gap:10px;margin-bottom:10px}
+.svo-stage-icon{width:36px;height:36px;border-radius:50%;background:rgba(59,130,246,.2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.svo-stage-body{flex:1;background:#0F1923;border-radius:10px;padding:10px 12px}
+.svo-stage-title{font-weight:700;font-size:13px;color:#F8FAFC}
+.svo-stage-dur{font-weight:400;font-size:11px;color:#475569}
+.svo-stage-info{font-size:12px;color:#94A3B8;margin-top:3px}
+.svo-faq-item{padding:10px 12px;margin-bottom:4px;background:#0F1923;border-radius:10px;cursor:pointer;border:1px solid transparent;transition:all .2s}
+.svo-faq-item.open{background:rgba(59,130,246,.13);border-color:rgba(59,130,246,.27)}
+.svo-faq-q{font-weight:700;font-size:13px;display:flex;justify-content:space-between;align-items:center;color:#E2E8F0}
+.svo-faq-a{font-size:12px;color:#94A3B8;margin-top:6px;line-height:1.5;display:none}
+.svo-faq-item.open .svo-faq-a{display:block}
+.svo-faq-item .arrow{font-size:11px;color:#475569;transition:transform .2s}
+.svo-faq-item.open .arrow{transform:rotate(180deg)}
+.back-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:.82rem;font-weight:600;color:var(--teal);cursor:pointer;transition:var(--tr);margin-bottom:16px;background:var(--teal-soft);border:none;font-family:inherit}
+.back-btn:hover{background:var(--teal-mid)}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px}
+
+/* ══ LIVEMAP FULL ══ */
+.livemap-wrap{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;height:calc(100vh - 180px);min-height:600px}
+.lm-date-strip{display:flex;align-items:center;background:var(--bg-card);border-bottom:1px solid var(--border);padding:0 0 0 50px;height:40px;flex-shrink:0}
+.lm-date-cell{flex:1;text-align:center;padding:4px 0;cursor:pointer;transition:var(--tr);position:relative}
+.lm-date-cell:hover{background:var(--teal-soft)}
+.lm-date-cell.today{background:var(--red-soft)}
+.lm-date-cell.today::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:16px;height:2px;background:var(--red);border-radius:1px}
+.lm-date-dow{font-size:.58rem;color:var(--txt-light);text-transform:uppercase;font-weight:600;letter-spacing:.05em}
+.lm-date-num{font-size:.88rem;font-weight:800}
+.lm-date-cell.today .lm-date-num{color:var(--red)}
+.lm-date-cell.today .lm-date-dow{color:var(--red)}
+.lm-content{flex:1;display:flex;overflow:hidden;position:relative}
+.lm-timeline{width:50px;flex-shrink:0;background:var(--bg-card);border-right:1px solid var(--border);position:relative;overflow:hidden}
+.lm-time-label{position:absolute;left:0;width:100%;text-align:right;padding-right:8px;font-size:.62rem;color:var(--txt-light);font-weight:500;font-family:'Fira Code',monospace;transform:translateY(-50%)}
+.lm-schedule{width:220px;flex-shrink:0;background:rgba(255,255,255,.7);border-right:1px solid var(--border);position:relative;overflow-y:auto;overflow-x:hidden}
+.lm-schedule::-webkit-scrollbar{width:3px}
+.lm-schedule::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:2px}
+.lm-chain-summary{background:linear-gradient(135deg,var(--teal-soft),var(--blue-soft));border-bottom:1px solid var(--teal-mid);padding:8px 10px}
+.lm-cs-title{font-size:.72rem;font-weight:700;color:var(--teal)}
+.lm-cs-chain{display:flex;align-items:center;gap:3px;margin-top:4px;flex-wrap:wrap}
+.lm-cs-node{padding:1px 6px;border-radius:10px;font-size:.58rem;font-weight:700;color:#fff}
+.lm-cs-arrow{font-size:.6rem;color:var(--txt-light)}
+.lm-cs-stats{display:flex;gap:8px;margin-top:4px;font-size:.6rem;color:var(--txt-dim)}
+.lm-cs-stats b{color:var(--teal)}
+.lm-hour-line{position:absolute;left:0;right:0;height:1px;background:var(--border)}
+.lm-now-line{position:absolute;left:0;right:0;height:2px;background:var(--red);z-index:40;pointer-events:none}
+.lm-now-line::before{content:'';position:absolute;left:-4px;top:-3px;width:8px;height:8px;border-radius:50%;background:var(--red)}
+.lm-event{position:absolute;left:4px;right:4px;border-radius:var(--radius-sm);padding:4px 6px;cursor:grab;z-index:10;overflow:hidden;user-select:none}
+.lm-event:active{cursor:grabbing}
+.lm-event:hover{box-shadow:var(--shadow-lg);transform:scale(1.02);z-index:20}
+.lm-event.dragging{opacity:.85;z-index:30;box-shadow:var(--shadow-xl);cursor:grabbing}
+.lm-event .ev-time{font-size:.55rem;font-weight:600;opacity:.8}
+.lm-event .ev-name{font-size:.7rem;font-weight:700;margin-top:1px}
+.lm-event .ev-detail{font-size:.58rem;opacity:.7;margin-top:1px}
+.lm-event.suggested{border:2px dashed;opacity:.85;background:rgba(255,255,255,.9)!important}
+.lm-event.suggested::after{content:'AI';position:absolute;top:3px;right:4px;font-size:.5rem;font-weight:800;background:rgba(255,255,255,.5);padding:0 2px;border-radius:2px}
+.lm-map-area{flex:1;position:relative;overflow:hidden;background:#edf2ef}
+.lm-route-path{fill:none;stroke-width:2.5;stroke-linecap:round;stroke-dasharray:7,4;animation:lmDash 1.5s linear infinite}
+@keyframes lmDash{to{stroke-dashoffset:-22}}
+.lm-mp{cursor:pointer;transition:transform .2s}
+.lm-mp:hover{transform:scale(1.15)}
+.lm-mp-pulse{animation:lmPulse 2.5s infinite}
+@keyframes lmPulse{0%,100%{opacity:.15}50%{opacity:.05}}
+.lm-legend{position:absolute;top:8px;right:8px;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 10px;font-size:.65rem;color:var(--txt-dim)}
+.lm-legend-item{display:flex;align-items:center;gap:5px;margin-bottom:3px}
+.lm-legend-dot{width:8px;height:8px;border-radius:50%}
+.lm-bottom-bar{position:absolute;bottom:0;left:0;right:0;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-top:1px solid var(--border);padding:8px 12px;display:flex;align-items:center;gap:10px}
+.lm-chain-conn{position:absolute;z-index:5;pointer-events:none;opacity:.4}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:3px}
+</style>
+</head>
+<body>
+<div class="app">
+<!-- ═══ SIDEBAR ═══ -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="#2ec4b6" stroke-width="2.5"/><circle cx="20" cy="20" r="8" fill="#2ec4b6" opacity=".3"/><path d="M20 6 C28 14, 28 26, 20 34 C12 26, 12 14, 20 6Z" fill="#2ec4b6" opacity=".5"/></svg>
+    <span>OneUnion<small>Осознанное Единство</small></span>
+  </div>
+  <nav>
+    <div class="nav-item active" onclick="showPage('feed',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="4" rx="1"/><rect x="14" y="10" width="7" height="11" rx="1"/><rect x="3" y="13" width="7" height="8" rx="1"/></svg>
+      Лента
+    </div>
+    <div class="nav-item" onclick="showPage('coordinator',this)" style="background:rgba(46,196,182,.06)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3m-3.5-6.5-2 2m-9 9-2 2m13 0-2-2m-9-9-2-2"/></svg>
+      Координатор
+      <span class="badge">AI</span>
+    </div>
+    <div class="nav-item" onclick="showPage('resources',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7h-4V3"/><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7l-6-4z"/></svg>
+      Ресурсы
+    </div>
+    <div class="nav-item" onclick="showPage('projects',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
+      Проекты
+    </div>
+    <div class="nav-item" onclick="showPage('jobs',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+      Биржа
+    </div>
+    <div class="nav-item" onclick="showPage('map',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/></svg>
+      Живая карта
+      <span class="badge" style="background:var(--gold)">new</span>
+    </div>
+    <div class="nav-item" onclick="showPage('users',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><circle cx="19" cy="7" r="3" opacity=".5"/><path d="M19 15a3 3 0 0 1 3 3v3" opacity=".5"/></svg>
+      Участники
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-label">Развитие</div>
+    <div class="nav-item" onclick="showPage('learning',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      Обучение
+      <span class="badge" style="background:var(--gold)">new</span>
+    </div>
+    <div class="nav-item" onclick="showPage('programs',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+      Программы
+      <span class="badge" style="background:var(--gold)">new</span>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-label">Библиотека</div>
+    <div class="nav-item" onclick="showPage('library',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      Библиотека
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-item" onclick="showPage('profile',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg>
+      Мой профиль
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    OneUnion v3.0 × ОЕ<br>ПК «214ПК» | <a href="#">Связаться</a>
+  </div>
+</aside>
+
+<!-- ═══ MAIN ═══ -->
+<div class="main">
+<div class="topbar">
+  <div class="topbar-search">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input placeholder="Поиск участников, ресурсов, проектов..." />
+  </div>
+  <div class="topbar-right">
+    <div class="topbar-icon" title="Избранное">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+    </div>
+    <div class="topbar-icon" title="Сообщения">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    </div>
+    <div class="topbar-icon" title="Уведомления" style="position:relative">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      <span style="position:absolute;top:2px;right:2px;width:8px;height:8px;border-radius:50%;background:var(--red)"></span>
+    </div>
+    <div class="avatar">ВИ</div>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ═══════ PAGE: FEED ═══════ -->
+<div class="page active" id="page-feed">
+  <div class="grid-main">
+    <div>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;margin-bottom:16px">Лента</h2>
+      <!-- Coordinator suggestion banner -->
+      <div class="card fade-in" style="background:linear-gradient(135deg,var(--teal-soft),rgba(59,130,246,.05));border-color:var(--teal-mid);margin-bottom:16px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--teal),#1a9e93);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.1rem;flex-shrink:0">🧭</div>
+          <div style="flex:1">
+            <div style="font-weight:700;font-size:.88rem;color:var(--teal)">AI-Координатор рекомендует</div>
+            <div style="font-size:.82rem;color:var(--txt-dim);margin-top:2px">Андрей Гартунов (87% совпадение) опубликовал проект «Целитель» — ваши компетенции в нутрициологии могут быть полезны. <a href="#" style="color:var(--teal);font-weight:600">Познакомиться →</a></div>
+          </div>
+        </div>
+      </div>
+      <!-- Posts -->
+      <div class="card fade-in fade-in-d1" style="margin-bottom:14px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#e8dcc8,#d4c4a8);display:flex;align-items:center;justify-content:center">АГ</div>
+          <div><div style="font-weight:700;font-size:.9rem">Андрей Гартунов</div><div style="font-size:.72rem;color:var(--txt-dim)">5 февраля 2026, 18:19</div></div>
+          <span class="tag tag-teal" style="margin-left:auto">Здоровье и медицина</span>
+        </div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;margin-bottom:6px">Целитель</div>
+        <p style="font-size:.85rem;color:var(--txt-dim)">Кулинарный продукт для ежедневного употребления. Биологически активный продукт дикого лосося с высоким содержанием серотонина...</p>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <span style="font-size:.78rem;color:var(--txt-light)">⭐ 4.2</span>
+          <span style="font-size:.78rem;color:var(--txt-light)">💬 3</span>
+          <span style="font-size:.78rem;color:var(--txt-light)">👁 128</span>
+        </div>
+      </div>
+      <div class="card fade-in fade-in-d2" style="margin-bottom:14px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#c4d8e8,#a8c4d4);display:flex;align-items:center;justify-content:center">ОС</div>
+          <div><div style="font-weight:700;font-size:.9rem">Сергеева Ольга Борисовна</div><div style="font-size:.72rem;color:var(--txt-dim)">4 февраля 2026, 10:05</div></div>
+          <span class="tag tag-gold" style="margin-left:auto">Управление бизнесом</span>
+        </div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;margin-bottom:6px">Эффективные каналы поиска и подбора персонала</div>
+        <p style="font-size:.85rem;color:var(--txt-dim)">Разбираем 12 каналов привлечения кандидатов, от классических до AI-инструментов нового поколения...</p>
+      </div>
+    </div>
+    <!-- RIGHT SIDEBAR -->
+    <div>
+      <div class="card fade-in" style="margin-bottom:14px">
+        <div class="card-title">Популярные авторы</div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px">
+          <div style="display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#d8c8e0,#c0a8d0);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700">ОС</div><div><div style="font-weight:600;font-size:.82rem">Сергеева Ольга</div><div style="font-size:.7rem;color:var(--txt-dim)">@sergeeva_olga</div></div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#c8d8c0,#a8c8a0);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700">ВК</div><div><div style="font-weight:600;font-size:.82rem">Виталий Кириллов</div><div style="font-size:.7rem;color:var(--txt-dim)">@magnitk</div></div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#d0d8c0,#b8c8a0);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700">ДТ</div><div><div style="font-weight:600;font-size:.82rem">Денис Тайченачев</div><div style="font-size:.7rem;color:var(--txt-dim)">@oneunion</div></div></div>
+        </div>
+      </div>
+      <div class="card fade-in fade-in-d1" style="margin-bottom:14px">
+        <div class="card-title">Ваш баланс</div>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-top:8px">
+          <span style="font-size:1.6rem;font-weight:800;font-family:'Cormorant Garamond',serif;color:var(--gold)">1 247</span>
+          <span style="font-size:.82rem;color:var(--txt-dim)">ТР</span>
+        </div>
+        <div style="font-size:.75rem;color:var(--emerald);font-weight:600;margin-top:2px">+38 за неделю ↑</div>
+        <div style="margin-top:8px;font-size:.78rem;color:var(--txt-dim)">Курс: 1 ТР = 0.84 ₽</div>
+        <button class="btn btn-outline" style="width:100%;margin-top:10px;font-size:.8rem">Wallet →</button>
+      </div>
+      <div class="card fade-in fade-in-d2">
+        <div class="card-title">Координатор сегодня</div>
+        <div style="font-size:.82rem;color:var(--txt-dim);margin-top:6px">☀️ Благоприятный день для творческих задач. Рядом с вами 3 потенциальных партнёра.</div>
+        <div style="font-size:.72rem;color:var(--teal);font-weight:600;margin-top:6px;cursor:pointer">Подробнее →</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ PAGE: COORDINATOR ═══════ -->
+<div class="page" id="page-coordinator">
+  <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;margin-bottom:16px">AI-Координатор</h2>
+  <div class="grid-main">
+    <div>
+      <div class="card" style="min-height:500px;display:flex;flex-direction:column">
+        <div style="display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:1px solid var(--border)">
+          <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--teal),#1a9e93);display:flex;align-items:center;justify-content:center;color:#fff">🧭</div>
+          <div><div style="font-weight:700;font-size:.9rem">Координатор</div><div style="font-size:.72rem;color:var(--teal)">Онлайн • Голосовой режим доступен</div></div>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:16px 0">
+          <div class="chat-msg bot"><div class="chat-bubble">Привет, Виталий! 👋 У тебя сегодня свободное окно с 14:00 до 16:00. Заметил, что Мария — фермер из Севастополя — ищет логиста для доставки. Совпадение по профилям <b>87%</b>. Хочешь, организую созвон?</div><div class="chat-time">09:15</div></div>
+          <div class="chat-msg user"><div class="chat-bubble">Да, интересно. А ещё мне нужен мануальный терапевт</div><div class="chat-time">09:17</div></div>
+          <div class="chat-msg bot">
+            <div class="chat-bubble">Нашёл двоих по твоему профилю. Рекомендую Ирину — максимальное совпадение по расписанию и стилю работы:</div>
+            <div class="specialist-card">
+              <h4>Ирина Петрова — мануальный терапевт</h4>
+              <p>⭐ 4.9 • 8 лет опыта • 🚶 10 мин от вас • Свободна завтра 15:00</p>
+              <p style="margin-top:4px"><b style="color:var(--teal)">Matching: 91%</b> (навыки 94% · стиль 88% · расписание 92%)</p>
+              <div style="margin-top:8px;display:flex;gap:6px">
+                <button class="btn btn-primary" style="font-size:.75rem;padding:5px 12px">Записаться</button>
+                <button class="btn btn-outline" style="font-size:.75rem;padding:5px 12px">Профиль</button>
+              </div>
+            </div>
+            <div class="chat-time">09:17</div>
+          </div>
+          <div class="chat-msg bot"><div class="chat-bubble">🔮 <i>Персональная подсказка:</i> Сегодня благоприятный день для оздоровительных процедур (лунный день способствует восстановлению). Записать на завтра в 15:00?</div><div class="chat-time">09:18</div></div>
+          <!-- NEW: Хочу найти scenario -->
+          <div class="chat-msg user"><div class="chat-bubble">Ищу розовый велосипед круизер с корзинкой</div><div class="chat-time">09:22</div></div>
+          <div class="chat-msg bot"><div class="chat-bubble">Ищу в базе... 🔍 Не нашёл точного совпадения. Но могу создать запрос «Хочу найти» — мастера и продавцы откликнутся со своими предложениями!</div><div class="chat-time">09:22</div></div>
+          <div class="chat-msg bot">
+            <div class="chat-bubble">
+              <div style="background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);border-radius:var(--radius-sm);padding:10px;margin-top:4px">
+                <div style="font-weight:700;font-size:.82rem;color:#f97316">🔍 Запрос-карточка сформирована</div>
+                <div style="font-size:.78rem;color:var(--txt-dim);margin-top:6px">🚲 Велосипед-круизер, розовый<br>💰 до 35 000₽ · 📅 до мая · 📍 Крым<br>📋 с корзиной, спидометр, размер L</div>
+                <div style="display:flex;gap:6px;margin-top:8px">
+                  <button class="btn btn-orange" style="font-size:.75rem;padding:5px 14px;border-radius:var(--radius-sm)">Отправить запрос</button>
+                  <button class="btn btn-outline" style="font-size:.75rem;padding:5px 12px;border-color:#f97316;color:#f97316">Изменить</button>
+                </div>
+              </div>
+            </div>
+            <div class="chat-time">09:23</div>
+          </div>
+        </div>
+        <div style="padding-top:12px;border-top:1px solid var(--border);display:flex;gap:8px">
+          <button class="chat-mic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg></button>
+          <input class="chat-input" placeholder="Спроси координатора..." />
+          <button class="chat-send"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card fade-in" style="margin-bottom:14px">
+        <div class="card-title">Ваши запросы</div>
+        <div style="margin-top:8px">
+          <div style="padding:8px 0;border-bottom:1px solid var(--border);font-size:.82rem;cursor:pointer;display:flex;align-items:center;gap:6px"><span style="color:#f97316">🔍</span> Розовый велосипед-круизер <span style="margin-left:auto;background:var(--emerald-soft);color:var(--emerald);font-size:.65rem;font-weight:700;padding:1px 6px;border-radius:8px">3 отклика</span></div>
+          <div style="padding:8px 0;border-bottom:1px solid var(--border);font-size:.82rem;cursor:pointer">🔍 Найти мануального терапевта</div>
+          <div style="padding:8px 0;border-bottom:1px solid var(--border);font-size:.82rem;cursor:pointer;color:var(--txt-dim)">🏪 Поставщик мёда в Крыму</div>
+          <div style="padding:8px 0;font-size:.82rem;cursor:pointer;color:var(--txt-dim)">📋 Бизнес-план кофейни</div>
+        </div>
+      </div>
+      <div class="card fade-in fade-in-d1" style="margin-bottom:14px">
+        <div class="card-title">Сегодня для вас</div>
+        <div style="font-size:.82rem;color:var(--txt-dim);margin-top:6px">
+          <div style="margin-bottom:6px">🤝 <b>3 новых совпадения</b> по вашим проектам</div>
+          <div style="margin-bottom:6px">📚 Курс «Предпринимательство» — подходит на <b style="color:var(--teal)">92%</b></div>
+          <div>🏠 Программа «СВОё-Жильё» — обновление статуса</div>
+        </div>
+      </div>
+      <div class="card fade-in fade-in-d2">
+        <div class="card-title">Колесо баланса</div>
+        <div class="wheel-container" style="margin-top:8px">
+          <canvas class="wheel-canvas" id="wheelCanvas" width="260" height="260"></canvas>
+          <div class="wheel-center">
+            <div class="wheel-score">6.8</div>
+            <div class="wheel-label">из 10</div>
+          </div>
+        </div>
+        <div style="font-size:.72rem;color:var(--txt-dim);text-align:center;margin-top:6px">⚠️ Здоровье и Финансы требуют внимания</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ PAGE: PROFILE ═══════ -->
+<div class="page" id="page-profile">
+  <div class="grid-main">
+    <div>
+      <div class="card fade-in" style="margin-bottom:16px">
+        <div style="display:flex;gap:20px;align-items:flex-start">
+          <div style="width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--blue));display:flex;align-items:center;justify-content:center;color:#fff;font-size:2rem;font-family:'Cormorant Garamond',serif;font-weight:700;flex-shrink:0">ВИ</div>
+          <div style="flex:1">
+            <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem">Виталий Извеков</h2>
+            <p style="font-size:.85rem;color:var(--txt-dim)">Председатель Правления ПК «214ПК»</p>
+            <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+              <span class="tag tag-teal">✅ Госуслуги</span>
+              <span class="tag tag-violet">🧠 CVCODE</span>
+              <span class="tag tag-gold">⭐ Эксперт</span>
+              <span class="tag tag-emerald">Профиль 94%</span>
+            </div>
+            <div style="display:flex;gap:20px;margin-top:12px;font-size:.82rem;color:var(--txt-dim)">
+              <span>📍 Армянск</span><span>📞 +7(915)998-23-23</span><span>✉️ <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dab3a0acbfb1b5ac9aaaa8b5aeb5b4f4b7bf">[email&#160;protected]</a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 LAYERS -->
+      <div class="card fade-in fade-in-d1" style="margin-bottom:16px">
+        <div class="card-title">Многослойный профиль</div>
+        <div class="card-subtitle">5 слоёв для точного matching</div>
+
+        <div class="layer">
+          <div class="layer-header">
+            <div class="layer-icon" style="background:var(--blue-soft);color:var(--blue)">📋</div>
+            <div class="layer-name" style="color:var(--blue)">Слой 1: ЧТО</div>
+            <div class="layer-pct" style="color:var(--blue)">96%</div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:4px">
+            <span class="tag tag-blue">Кооперативное право</span>
+            <span class="tag tag-blue">Стратегия</span>
+            <span class="tag tag-blue">Проект-менеджмент</span>
+            <span class="tag tag-blue">Маркетинг</span>
+            <span class="tag tag-blue">Предпринимательство</span>
+          </div>
+        </div>
+
+        <div class="layer">
+          <div class="layer-header">
+            <div class="layer-icon" style="background:var(--gold-soft);color:var(--gold)">💛</div>
+            <div class="layer-name" style="color:var(--gold)">Слой 2: ПОЧЕМУ</div>
+            <div class="layer-pct" style="color:var(--gold)">92%</div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:4px">
+            <span class="tag tag-gold">Справедливая экономика</span>
+            <span class="tag tag-gold">Помощь семьям СВО</span>
+            <span class="tag tag-gold">Кооперация > конкуренция</span>
+            <span class="tag tag-gold">Развитие сообщества</span>
+          </div>
+        </div>
+
+        <div class="layer">
+          <div class="layer-header">
+            <div class="layer-icon" style="background:var(--emerald-soft);color:var(--emerald)">🤝</div>
+            <div class="layer-name" style="color:var(--emerald)">Слой 3: КАК</div>
+            <div class="layer-pct" style="color:var(--emerald)">88%</div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:4px">
+            <span class="tag tag-emerald">Голос/Telegram</span>
+            <span class="tag tag-emerald">Утро/день</span>
+            <span class="tag tag-emerald">Онлайн</span>
+            <span class="tag tag-emerald">Малые группы</span>
+          </div>
+        </div>
+
+        <div class="layer">
+          <div class="layer-header">
+            <div class="layer-icon" style="background:var(--violet-soft);color:var(--violet)">🧠</div>
+            <div class="layer-name" style="color:var(--violet)">Слой 4: CVCODE</div>
+            <div class="layer-pct" style="color:var(--violet)">Пройден</div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:4px">
+            <span class="tag tag-violet">BIG5: OCEAN</span>
+            <span class="tag tag-violet">Лидер-визионер</span>
+            <span class="tag tag-violet">Карта роста: 78%</span>
+          </div>
+        </div>
+
+        <div class="layer">
+          <div class="layer-header">
+            <div class="layer-icon" style="background:var(--warm-soft);color:var(--warm)">🔮</div>
+            <div class="layer-name" style="color:var(--warm)">Слой 5: Астро</div>
+            <div class="layer-pct" style="color:var(--warm)">Указано</div>
+          </div>
+          <div style="font-size:.8rem;color:var(--txt-dim)">
+            📅 12.03.1985 • ⏰ 06:30 • 📍 Симферополь<br>
+            <span style="font-size:.75rem;color:var(--warm)">Координатор использует эти данные для персонализированных рекомендаций товаров, услуг и мероприятий</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- BALANCE WHEEL FULL -->
+      <div class="card fade-in fade-in-d2" style="margin-bottom:16px">
+        <div class="card-title">Колесо жизненного баланса</div>
+        <div class="card-subtitle">8 сфер жизни — оценка и рекомендации Координатора</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
+          <div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;border-radius:50%;background:var(--emerald-soft);display:flex;align-items:center;justify-content:center;font-size:.75rem">💪</div><div><div style="font-size:.82rem;font-weight:600">Здоровье</div><div class="progress" style="width:100px;margin-top:3px"><div class="progress-fill" style="width:50%;background:var(--red)"></div></div></div><span style="font-size:.82rem;font-weight:700;color:var(--red)">5</span></div>
+          <div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;border-radius:50%;background:var(--gold-soft);display:flex;align-items:center;justify-content:center;font-size:.75rem">💰</div><div><div style="font-size:.82rem;font-weight:600">Финансы</div><div class="progress" style="width:100px;margin-top:3px"><div class="progress-fill" style="width:60%;background:var(--warm)"></div></div></div><span style="font-size:.82rem;font-weight:700;color:var(--warm)">6</span></div>
+          <div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;border-radius:50%;background:var(--blue-soft);display:flex;align-items:center;justify-content:center;font-size:.75rem">🏢</div><div><div style="font-size:.82rem;font-weight:600">Карьера</div><div class="progress" style="width:100px;margin-top:3px"><div class="progress-fill" style="width:80%;background:var(--teal)"></div></div></div><span style="font-size:.82rem;font-weight:700;color:var(--teal)">8</span></div>
+          <div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;border-radius:50%;background:var(--rose-soft);display:flex;align-items:center;justify-content:center;font-size:.75rem">❤️</div><div><div style="font-size:.82rem;font-weight:600">Отношения</div><div class="progress" style="width:100px;margin-top:3px"><div class="progress-fill" style="width:70%;background:var(--blue)"></div></div></div><span style="font-size:.82rem;font-weight:700;color:var(--blue)">7</span></div>
+          <div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;border-radius:50%;background:var(--violet-soft);display:flex;align-items:center;justify-content:center;font-size:.75rem">📖</div><div><div style="font-size:.82rem;font-weight:600">Саморазвитие</div><div class="progress" style="width:100px;margin-top:3px"><div class="progress-fill" style="width:90%;background:var(--teal)"></div></div></div><span style="font-size:.82rem;font-weight:700;color:var(--teal)">9</span></div>
+          <div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;border-radius:50%;background:var(--teal-soft);display:flex;align-items:center;justify-content:center;font-size:.75rem">👥</div><div><div style="font-size:.82rem;font-weight:600">Окружение</div><div class="progress" style="width:100px;margin-top:3px"><div class="progress-fill" style="width:70%;background:var(--blue)"></div></div></div><span style="font-size:.82rem;font-weight:700;color:var(--blue)">7</span></div>
+          <div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;border-radius:50%;background:var(--warm-soft);display:flex;align-items:center;justify-content:center;font-size:.75rem">🎨</div><div><div style="font-size:.82rem;font-weight:600">Отдых</div><div class="progress" style="width:100px;margin-top:3px"><div class="progress-fill" style="width:40%;background:var(--red)"></div></div></div><span style="font-size:.82rem;font-weight:700;color:var(--red)">4</span></div>
+          <div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;border-radius:50%;background:var(--gold-soft);display:flex;align-items:center;justify-content:center;font-size:.75rem">🙏</div><div><div style="font-size:.82rem;font-weight:600">Духовное</div><div class="progress" style="width:100px;margin-top:3px"><div class="progress-fill" style="width:80%;background:var(--teal)"></div></div></div><span style="font-size:.82rem;font-weight:700;color:var(--teal)">8</span></div>
+        </div>
+        <div style="margin-top:12px;padding:10px;background:var(--teal-soft);border-radius:var(--radius-sm);font-size:.82rem;color:var(--txt-dim)">
+          🧭 <b style="color:var(--teal)">Координатор:</b> Сфера «Отдых» (4/10) критически низкая. Рядом с вами сегодня: мастер-класс по керамике (15:00, 12 мин). Совпадение с вашими интересами — 78%.
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card fade-in" style="margin-bottom:14px">
+        <div class="card-title">Matching качество</div>
+        <div style="margin-top:10px">
+          <div style="display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:4px"><span>Навыки</span><span style="font-weight:700;color:var(--blue)">94%</span></div>
+          <div class="progress"><div class="progress-fill" style="width:94%;background:var(--blue)"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:.82rem;margin:8px 0 4px"><span>Мотивация</span><span style="font-weight:700;color:var(--gold)">89%</span></div>
+          <div class="progress"><div class="progress-fill" style="width:89%;background:var(--gold)"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:.82rem;margin:8px 0 4px"><span>Стиль</span><span style="font-weight:700;color:var(--emerald)">82%</span></div>
+          <div class="progress"><div class="progress-fill" style="width:82%;background:var(--emerald)"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:.82rem;margin:8px 0 4px"><span>CVCODE</span><span style="font-weight:700;color:var(--violet)">91%</span></div>
+          <div class="progress"><div class="progress-fill" style="width:91%;background:var(--violet)"></div></div>
+          <div style="margin-top:12px;text-align:center">
+            <div style="font-size:2rem;font-weight:800;font-family:'Cormorant Garamond',serif;color:var(--teal)">91%</div>
+            <div style="font-size:.75rem;color:var(--txt-dim)">Общее качество matching</div>
+          </div>
+        </div>
+      </div>
+      <div class="card fade-in fade-in-d1" style="margin-bottom:14px">
+        <div class="card-title">Токены развития</div>
+        <div style="margin-top:8px;text-align:center">
+          <div style="font-size:2rem;font-weight:800;font-family:'Cormorant Garamond',serif;color:var(--gold)">1 247 ТР</div>
+          <div style="font-size:.75rem;color:var(--txt-dim)">Курс: 0.84 ₽/ТР | +38 за неделю</div>
+        </div>
+        <div style="margin-top:10px;font-size:.78rem;color:var(--txt-dim)">
+          <div style="display:flex;justify-content:space-between;padding:4px 0"><span>За отзывы</span><span style="color:var(--emerald)">+12 ТР</span></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0"><span>За рекомендации</span><span style="color:var(--emerald)">+18 ТР</span></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0"><span>Реферальный фонд</span><span style="color:var(--emerald)">+8 ТР</span></div>
+        </div>
+      </div>
+      <div class="card fade-in fade-in-d2">
+        <div class="card-title">Активные программы</div>
+        <div style="margin-top:8px;padding:8px 10px;background:var(--blue-soft);border-radius:var(--radius-sm);cursor:pointer" onclick="showPage('programs',this)">
+          <div style="font-weight:700;font-size:.82rem;color:var(--blue)">🏠 СВОё-Жильё</div>
+          <div style="font-size:.72rem;color:var(--txt-dim)">Пайщик #47 • ЦПВ: 50 000₽ • Очередь: 3 мес</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ PAGE: RESOURCES (MARKETPLACE) ═══════ -->
+<div class="page" id="page-resources">
+  <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;margin-bottom:4px">Ресурсы <span style="font-size:.9rem;color:var(--txt-dim);font-weight:400">(159 элементов)</span></h2>
+  <p style="font-size:.82rem;color:var(--txt-dim);margin-bottom:16px">Маркетплейс с моделью 50/25/20/5</p>
+  <div class="fund-bar">
+    <div class="fund-seg" style="width:50%;background:var(--blue)">Эксперт 50%</div>
+    <div class="fund-seg" style="width:25%;background:var(--emerald)">ФР 25%</div>
+    <div class="fund-seg" style="width:20%;background:var(--warm)">Покупатель 20%</div>
+    <div class="fund-seg" style="width:5%;background:var(--txt-light);min-width:30px">ФП</div>
+  </div>
+  <div style="display:flex;gap:8px;margin:14px 0;flex-wrap:wrap">
+    <button class="btn btn-primary" style="font-size:.8rem">Все</button>
+    <button class="btn btn-outline" style="font-size:.8rem">Рядом</button>
+    <button class="btn btn-outline" style="font-size:.8rem">Фермеры</button>
+    <button class="btn btn-outline" style="font-size:.8rem">Услуги</button>
+    <button class="btn btn-outline" style="font-size:.8rem">Хэндмейд</button>
+    <button class="btn btn-outline" style="font-size:.8rem">Здоровье</button>
+    <button class="btn btn-orange" style="font-size:.8rem;margin-left:auto" onclick="showPage('coordinator',document.querySelectorAll('.nav-item')[1])">🔍 Хочу найти</button>
+  </div>
+  <div class="grid-4">
+    <div class="product-card fade-in"><div class="product-img" style="background:linear-gradient(135deg,#f0e8d8,#e0d4c0)">🍯</div><div class="product-body"><div class="product-name">Горный мёд</div><div class="product-seller">Иван Петров • 📍Крым</div><div class="product-price">850 ₽</div><div class="product-dist"><div class="dist-bar"><div style="width:50%;background:var(--blue);height:6px"></div><div style="width:25%;background:var(--emerald);height:6px"></div><div style="width:20%;background:var(--warm);height:6px"></div><div style="width:5%;background:var(--txt-light);height:6px"></div></div><div class="dist-legend"><span>425₽ эксп.</span><span>213₽ ФР</span><span>170₽ тебе</span></div></div></div></div>
+    <div class="product-card fade-in fade-in-d1"><div class="product-img" style="background:linear-gradient(135deg,#e8d8f0,#d0c0e0)">🕯</div><div class="product-body"><div class="product-name">Свечи ручной работы</div><div class="product-seller">Мария Светлова</div><div class="product-price">450 ₽</div><div class="product-dist"><div class="dist-bar"><div style="width:50%;background:var(--blue);height:6px"></div><div style="width:25%;background:var(--emerald);height:6px"></div><div style="width:20%;background:var(--warm);height:6px"></div><div style="width:5%;background:var(--txt-light);height:6px"></div></div></div></div></div>
+    <div class="product-card fade-in fade-in-d2"><div class="product-img" style="background:linear-gradient(135deg,#d8f0e8,#c0e0d0)">🥗</div><div class="product-body"><div class="product-name">Консультация нутрициолога</div><div class="product-seller">Елена Кузнецова</div><div class="product-price">2 500 ₽</div><div style="margin-top:4px"><span class="tag tag-teal" style="font-size:.65rem">🔮 Рекомендовано сегодня</span></div></div></div>
+    <div class="product-card fade-in fade-in-d3"><div class="product-img" style="background:linear-gradient(135deg,#f0e0d0,#e0d0c0)">🏠</div><div class="product-body"><div class="product-name">Строительство Hyper Adobe</div><div class="product-seller">Дмитрий Панков</div><div class="product-price">1 200 000 ₽</div><div style="margin-top:4px"><span class="tag tag-blue" style="font-size:.65rem">Привязан к СВОё-Жильё</span></div></div></div>
+  </div>
+</div>
+
+<!-- ═══════ PAGE: PROGRAMS ═══════ -->
+<div class="page" id="page-programs">
+  <div id="programs-list-view">
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;margin-bottom:16px">Программы</h2>
+    <div class="grid-3">
+      <div class="card fade-in" style="cursor:pointer;border-color:rgba(59,130,246,.3);transition:all .25s" onclick="showSvoProgram()" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 32px rgba(0,0,0,.08)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="font-size:2rem;margin-bottom:8px">🏠</div>
+        <div class="card-title">СВОё-Жильё</div>
+        <div class="card-subtitle">64 семьи • Прогресс 15%</div>
+        <div class="progress"><div class="progress-fill" style="width:15%;background:var(--blue)"></div></div>
+        <div style="display:flex;gap:4px;margin-top:8px;flex-wrap:wrap">
+          <span class="tag tag-blue" style="font-size:.65rem">🏗️ Строительство</span>
+          <span class="tag tag-emerald" style="font-size:.65rem">💰 50/25/20/5</span>
+        </div>
+        <div style="margin-top:10px;font-size:.75rem;color:var(--teal);font-weight:600;display:flex;align-items:center;gap:4px">Открыть программу <span style="font-size:.9rem">→</span></div>
+      </div>
+    </div>
+  </div>
+  <div id="svo-program-detail" style="display:none">
+    <button class="back-btn" onclick="hideSvoProgram()">← Назад к программам</button>
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+      <div style="background:linear-gradient(135deg,#1E3A5F,#0F1923);padding:24px;color:#fff">
+        <div style="font-size:.72rem;font-weight:700;color:#22D3EE;letter-spacing:2px;margin-bottom:4px">ПК РЦП «214ПК»</div>
+        <div style="font-size:1.5rem;font-weight:800;font-family:'Cormorant Garamond',serif">Программа «Жильё-СВО» v4.0</div>
+        <div style="display:flex;gap:16px;margin-top:8px;font-size:.82rem;color:#94A3B8;flex-wrap:wrap"><span>🏠 64 семьи</span><span>📍 Воронкино</span><span>🔧 СИП</span><span>💰 −60–75% от рынка</span></div>
+      </div>
+      <div id="svoFullTabs" style="display:flex;gap:3px;padding:12px 16px 0;overflow-x:auto;background:#0F1923"></div>
+      <div style="background:#0F1923;color:#E2E8F0;padding:0 16px 16px" id="svoFullContent"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ PAGE: MAP ═══════ -->
+<div class="page" id="page-map">
+  <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;margin-bottom:12px">Живая карта</h2>
+  <div class="livemap-wrap">
+    <!-- Date strip -->
+    <div class="lm-date-strip" id="lmDateStrip"></div>
+    <!-- Content: timeline + schedule + map -->
+    <div class="lm-content">
+      <!-- Time axis -->
+      <div class="lm-timeline" id="lmTimeAxis"></div>
+      <!-- Schedule lane -->
+      <div class="lm-schedule" id="lmSchedule">
+        <div class="lm-chain-summary">
+          <div class="lm-cs-title">🧭 Маршрут дня</div>
+          <div class="lm-cs-chain">
+            <span class="lm-cs-node" style="background:var(--teal)">☕ 09:30</span>
+            <span class="lm-cs-arrow">→</span>
+            <span class="lm-cs-node" style="background:var(--blue)">🤝 11:00</span>
+            <span class="lm-cs-arrow">→</span>
+            <span class="lm-cs-node" style="background:var(--violet)">🍕 13:00</span>
+            <span class="lm-cs-arrow">→</span>
+            <span class="lm-cs-node" style="background:var(--gold);border:2px dashed rgba(255,255,255,.5)">💆 15:00</span>
+            <span class="lm-cs-arrow">→</span>
+            <span class="lm-cs-node" style="background:var(--emerald);border:2px dashed rgba(255,255,255,.5)">🌾 16:30</span>
+          </div>
+          <div class="lm-cs-stats">
+            <span>⏱ <b>5 событий</b></span>
+            <span>🚶 <b>42 мин</b></span>
+            <span>📍 <b>3.8 км</b></span>
+          </div>
+        </div>
+        <div id="lmEventsContainer" style="position:relative;height:960px"></div>
+      </div>
+      <!-- Map area -->
+      <div class="lm-map-area">
+        <svg viewBox="0 0 800 480" style="width:100%;height:100%">
+          <rect width="800" height="480" fill="#edf2ef"/>
+          <!-- Parks -->
+          <ellipse cx="240" cy="160" rx="65" ry="40" fill="#dceede" opacity=".6"/>
+          <ellipse cx="560" cy="320" rx="50" ry="30" fill="#dceede" opacity=".6"/>
+          <!-- Grid -->
+          <g stroke="#d0d8d4" stroke-width=".5" opacity=".4">
+            <line x1="0" y1="60" x2="800" y2="60"/><line x1="0" y1="120" x2="800" y2="120"/>
+            <line x1="0" y1="180" x2="800" y2="180"/><line x1="0" y1="240" x2="800" y2="240"/>
+            <line x1="0" y1="300" x2="800" y2="300"/><line x1="0" y1="360" x2="800" y2="360"/>
+            <line x1="0" y1="420" x2="800" y2="420"/>
+            <line x1="100" y1="0" x2="100" y2="480"/><line x1="200" y1="0" x2="200" y2="480"/>
+            <line x1="300" y1="0" x2="300" y2="480"/><line x1="400" y1="0" x2="400" y2="480"/>
+            <line x1="500" y1="0" x2="500" y2="480"/><line x1="600" y1="0" x2="600" y2="480"/>
+            <line x1="700" y1="0" x2="700" y2="480"/>
+          </g>
+          <!-- Roads -->
+          <g stroke="#c0ccc6" stroke-width="4" stroke-linecap="round" fill="none">
+            <line x1="40" y1="240" x2="760" y2="240"/>
+            <line x1="400" y1="25" x2="400" y2="455"/>
+            <path d="M80,120 Q320,200 560,100"/>
+            <path d="M120,360 Q400,300 680,370"/>
+          </g>
+          <!-- Route (animated) -->
+          <path class="lm-route-path" stroke="var(--teal)" d="M210,145 L370,225 L400,280 L545,175 L600,305" opacity=".7"/>
+          <!-- Route step numbers -->
+          <g font-family="Nunito Sans" font-size="9" font-weight="800" fill="#fff">
+            <circle cx="210" cy="145" r="8" fill="var(--teal)"/><text x="210" y="148" text-anchor="middle">1</text>
+            <circle cx="370" cy="225" r="8" fill="var(--blue)"/><text x="370" y="228" text-anchor="middle">2</text>
+            <circle cx="400" cy="280" r="8" fill="var(--violet)"/><text x="400" y="283" text-anchor="middle">3</text>
+            <circle cx="545" cy="175" r="8" fill="var(--gold)"/><text x="545" y="178" text-anchor="middle">4</text>
+            <circle cx="600" cy="305" r="8" fill="var(--emerald)"/><text x="600" y="308" text-anchor="middle">5</text>
+          </g>
+          <!-- People points -->
+          <g class="lm-mp">
+            <circle cx="210" cy="145" r="18" fill="var(--teal)" class="lm-mp-pulse"/><circle cx="210" cy="145" r="10" fill="var(--teal)"/>
+            <text x="210" y="149" text-anchor="middle" font-size="10" fill="#fff">☕</text>
+            <text x="210" y="172" text-anchor="middle" font-family="Nunito Sans" font-size="8" fill="var(--txt-dim)" font-weight="600">Кофеин · 09:30</text>
+          </g>
+          <g class="lm-mp">
+            <circle cx="370" cy="225" r="18" fill="var(--blue)" class="lm-mp-pulse" style="animation-delay:.5s"/><circle cx="370" cy="225" r="10" fill="var(--blue)"/>
+            <text x="370" y="229" text-anchor="middle" font-size="10" fill="#fff">🤝</text>
+            <text x="370" y="252" text-anchor="middle" font-family="Nunito Sans" font-size="8" fill="var(--txt-dim)" font-weight="600">Андрей · 87% · 11:00</text>
+          </g>
+          <g class="lm-mp">
+            <circle cx="400" cy="280" r="18" fill="var(--violet)" class="lm-mp-pulse" style="animation-delay:1s"/><circle cx="400" cy="280" r="10" fill="var(--violet)"/>
+            <text x="400" y="284" text-anchor="middle" font-size="10" fill="#fff">🍕</text>
+            <text x="400" y="307" text-anchor="middle" font-family="Nunito Sans" font-size="8" fill="var(--txt-dim)" font-weight="600">Обед · 13:00</text>
+          </g>
+          <g class="lm-mp">
+            <circle cx="545" cy="175" r="18" fill="var(--gold)" class="lm-mp-pulse" style="animation-delay:1.5s"/><circle cx="545" cy="175" r="10" fill="var(--gold)" stroke="#fff" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <text x="545" y="179" text-anchor="middle" font-size="10" fill="#fff">💆</text>
+            <text x="545" y="200" text-anchor="middle" font-family="Nunito Sans" font-size="8" fill="var(--gold)" font-weight="700">Ирина · 91% · 15:00 ✨</text>
+          </g>
+          <g class="lm-mp">
+            <circle cx="600" cy="305" r="18" fill="var(--emerald)" class="lm-mp-pulse" style="animation-delay:2s"/><circle cx="600" cy="305" r="10" fill="var(--emerald)" stroke="#fff" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <text x="600" y="309" text-anchor="middle" font-size="10" fill="#fff">🌾</text>
+            <text x="600" y="330" text-anchor="middle" font-family="Nunito Sans" font-size="8" fill="var(--emerald)" font-weight="700">Мария · 16:30 ✨</text>
+          </g>
+          <!-- Hochu Najti request -->
+          <g class="lm-mp">
+            <circle cx="280" cy="340" r="16" fill="#f97316" opacity=".12"/><circle cx="280" cy="340" r="9" fill="#f97316" stroke="#fff" stroke-width="1.5"/>
+            <text x="280" y="344" text-anchor="middle" font-size="8" fill="#fff">💡</text>
+            <text x="280" y="362" text-anchor="middle" font-family="Nunito Sans" font-size="7" fill="#f97316" font-weight="700">Запрос: Велосипед</text>
+          </g>
+          <!-- YOU -->
+          <g class="lm-mp">
+            <circle cx="340" cy="250" r="22" fill="var(--red)" opacity=".08"><animate attributeName="r" values="22;30;22" dur="2.5s" repeatCount="indefinite"/></circle>
+            <circle cx="340" cy="250" r="12" fill="var(--red)" stroke="#fff" stroke-width="2.5"/>
+            <text x="340" y="254" text-anchor="middle" font-size="11" fill="#fff">📍</text>
+            <text x="340" y="275" text-anchor="middle" font-family="Nunito Sans" font-size="9" fill="var(--red)" font-weight="800">Вы · сейчас</text>
+          </g>
+          <!-- Travel time labels -->
+          <g font-family="Nunito Sans" font-size="7" fill="var(--teal)" font-weight="500">
+            <rect x="270" y="178" width="42" height="12" rx="3" fill="rgba(255,255,255,.85)"/><text x="291" y="187" text-anchor="middle">🚶 12м</text>
+            <rect x="368" y="248" width="38" height="12" rx="3" fill="rgba(255,255,255,.85)"/><text x="387" y="257" text-anchor="middle">🚶 8м</text>
+            <rect x="454" y="220" width="42" height="12" rx="3" fill="rgba(255,255,255,.85)"/><text x="475" y="229" text-anchor="middle">🚌 15м</text>
+            <rect x="555" y="234" width="38" height="12" rx="3" fill="rgba(255,255,255,.85)"/><text x="574" y="243" text-anchor="middle">🚶 7м</text>
+          </g>
+        </svg>
+        <!-- Legend with Ищу рядом -->
+        <div class="lm-legend">
+          <div style="font-weight:700;margin-bottom:3px">Легенда</div>
+          <div class="lm-legend-item"><div class="lm-legend-dot" style="background:var(--teal)"></div>Подтверждено</div>
+          <div class="lm-legend-item"><div class="lm-legend-dot" style="border:2px dashed var(--gold);background:none"></div>Предложено AI</div>
+          <div class="lm-legend-item"><div class="lm-legend-dot" style="background:var(--red)"></div>Ваша позиция</div>
+          <div class="lm-legend-item"><div class="lm-legend-dot" style="background:#f97316"></div>Запросы</div>
+          <div class="lm-legend-item"><svg width="18" height="5"><line x1="0" y1="2.5" x2="18" y2="2.5" stroke="var(--teal)" stroke-width="2" stroke-dasharray="4,3"/></svg>Маршруты</div>
+          <button class="btn btn-orange" style="font-size:.62rem;padding:3px 10px;margin-top:6px;width:100%;border-radius:var(--radius-sm)" onclick="toggleRequest()">📍 Ищу рядом</button>
+        </div>
+        <!-- Bottom bar -->
+        <div class="lm-bottom-bar">
+          <div style="font-size:1rem">🧭</div>
+          <div style="flex:1">
+            <div style="font-weight:700;font-size:.78rem">Координатор оптимизировал маршрут</div>
+            <div style="font-size:.68rem;color:var(--txt-dim)">Экономия 40 мин · 💆 Ирина + 🌾 Мария — по пути</div>
+          </div>
+          <button class="btn btn-primary" style="font-size:.68rem;padding:4px 10px;flex-shrink:0">Принять</button>
+          <button class="btn btn-outline" style="font-size:.68rem;padding:4px 10px;flex-shrink:0">Изменить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page" id="page-learning">
+  <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;margin-bottom:4px">Обучение</h2>
+  <p style="font-size:.82rem;color:var(--txt-dim);margin-bottom:16px">Персональные траектории от Координатора на основе вашего профиля</p>
+  <div class="card fade-in" style="background:linear-gradient(135deg,var(--violet-soft),var(--blue-soft));border-color:rgba(139,92,246,.15);margin-bottom:16px">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="font-size:1.5rem">🧭</div>
+      <div>
+        <div style="font-weight:700;font-size:.88rem;color:var(--violet)">Рекомендация Координатора</div>
+        <div style="font-size:.82rem;color:var(--txt-dim)">На основе вашего профиля (CVCODE: Лидер-визионер) и колеса баланса (Финансы: 6/10), рекомендую курс «Предпринимательство». Совпадение — <b style="color:var(--teal)">92%</b></div>
+      </div>
+    </div>
+  </div>
+  <div class="grid-3">
+    <div class="course-card fade-in"><div class="course-img" style="background:linear-gradient(135deg,#dce8f0,#c0d4e0)">🎯</div><div class="course-body"><div class="course-title">Предпринимательство</div><div class="course-meta">2 мес • 50 000₽ • Сертификат</div><div class="course-match">92% match</div></div></div>
+    <div class="course-card fade-in fade-in-d1"><div class="course-img" style="background:linear-gradient(135deg,#e8dce0,#d0c0c8)">💼</div><div class="course-body"><div class="course-title">Кооперативное право</div><div class="course-meta">1 мес • 25 000₽</div><div class="course-match">85% match</div></div></div>
+    <div class="course-card fade-in fade-in-d2"><div class="course-img" style="background:linear-gradient(135deg,#dce0f0,#c0c8e0)">🤖</div><div class="course-body"><div class="course-title">AI для бизнеса</div><div class="course-meta">3 нед • 15 000₽</div><div class="course-match">78% match</div></div></div>
+  </div>
+</div>
+
+<!-- ═══════ STUB PAGES ═══════ -->
+<div class="page" id="page-projects">
+  <div id="projects-list">
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;margin-bottom:16px">Проекты</h2>
+    <div class="grid-3">
+      <div class="card fade-in">
+        <div style="font-size:2rem;margin-bottom:8px">☕</div>
+        <div class="card-title">Кофейня с коворкингом</div>
+        <div class="card-subtitle">4 участника • Прогресс 65%</div>
+        <div class="progress"><div class="progress-fill" style="width:65%;background:var(--teal)"></div></div>
+      </div>
+      <div class="card fade-in fade-in-d1">
+        <div style="font-size:2rem;margin-bottom:8px">🚚</div>
+        <div class="card-title">Фермерская доставка</div>
+        <div class="card-subtitle">3 участника • Прогресс 40%</div>
+        <div class="progress"><div class="progress-fill" style="width:40%;background:var(--blue)"></div></div>
+      </div>
+      <div class="card fade-in fade-in-d2">
+        <div style="font-size:2rem;margin-bottom:8px">🎓</div>
+        <div class="card-title">Образовательный центр</div>
+        <div class="card-subtitle">2 участника • Прогресс 20%</div>
+        <div class="progress"><div class="progress-fill" style="width:20%;background:var(--warm)"></div></div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+<div class="page" id="page-jobs">
+  <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;margin-bottom:16px">Биржа</h2>
+  <div style="display:flex;gap:4px;margin-bottom:16px">
+    <button class="btn btn-primary" id="jobTabVac" onclick="showJobTab('vacancies')">Вакансии</button>
+    <button class="btn btn-outline" id="jobTabRes" onclick="showJobTab('resumes')">Резюме</button>
+    <button class="btn btn-outline" id="jobTabReq" onclick="showJobTab('requests')" style="border-color:#f97316;color:#f97316">🔍 Запросы <span style="background:#f97316;color:#fff;padding:1px 6px;border-radius:10px;font-size:.65rem;margin-left:4px">3</span></button>
+  </div>
+  <div id="jobVacancies">
+    <div class="grid-3">
+      <div class="card fade-in"><div class="card-title">Backend разработчик</div><div class="card-subtitle">Максим · Севастополь</div><button class="btn btn-primary" style="width:100%;margin-top:8px;font-size:.8rem">Связаться</button></div>
+      <div class="card fade-in fade-in-d1"><div class="card-title">Ищем сиделку</div><div class="card-subtitle">Денис · 50 тыс₽/мес</div><button class="btn btn-primary" style="width:100%;margin-top:8px;font-size:.8rem">Связаться</button></div>
+      <div class="card fade-in fade-in-d2"><div class="card-title">Бизнес-план для гранта</div><div class="card-subtitle">Ольга Борисовна</div><button class="btn btn-primary" style="width:100%;margin-top:8px;font-size:.8rem">Связаться</button></div>
+    </div>
+  </div>
+  <div id="jobResumes" style="display:none">
+    <div class="grid-3">
+      <div class="card fade-in"><div class="card-title">Маркетолог</div><div class="card-subtitle">Ольга Сергеева · Севастополь</div><button class="btn btn-outline" style="width:100%;margin-top:8px;font-size:.8rem">Посмотреть</button></div>
+      <div class="card fade-in fade-in-d1"><div class="card-title">Строитель СИП</div><div class="card-subtitle">Дмитрий Панков · Ярославль</div><button class="btn btn-outline" style="width:100%;margin-top:8px;font-size:.8rem">Посмотреть</button></div>
+    </div>
+  </div>
+  <div id="jobRequests" style="display:none">
+    <div style="margin-bottom:16px;padding:14px;background:rgba(249,115,22,.06);border:1px solid rgba(249,115,22,.15);border-radius:var(--radius);font-size:.85rem;color:var(--txt-dim)">
+      <b style="color:#f97316">🔍 Запросы покупателей</b> — покупатели описывают, что хотят найти, а исполнители откликаются. Спрос рождает предложение!
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="request-card fade-in">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--blue));display:flex;align-items:center;justify-content:center;color:#fff;font-size:.75rem;font-weight:700">ВИ</div>
+            <div><div style="font-weight:700;font-size:.88rem">Виталий Извеков</div><div style="font-size:.7rem;color:var(--txt-dim)">22 фев • ⏰ 5 дней</div></div>
+          </div>
+          <span class="request-status active">3 отклика</span>
+        </div>
+        <div style="font-weight:700;font-size:1rem;margin-bottom:6px">🚲 Розовый велосипед-круизер</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px"><span class="tag tag-orange">до 35 000₽</span><span class="tag tag-blue">📍 Крым</span><span class="tag tag-teal">до мая</span><span class="tag tag-violet">с корзиной</span></div>
+        <div style="display:flex;gap:8px"><button class="btn btn-orange" style="font-size:.78rem;padding:6px 14px">✅ Могу сделать</button><button class="btn btn-outline" style="font-size:.78rem;padding:6px 14px;border-color:#f97316;color:#f97316">🔄 С изменениями</button></div>
+      </div>
+      <div class="request-card fade-in fade-in-d1">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#d8c8e0,#c0a8d0);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700">ОС</div>
+            <div><div style="font-weight:700;font-size:.88rem">Ольга Сергеева</div><div style="font-size:.7rem;color:var(--txt-dim)">21 фев • ⏰ 4 дня</div></div>
+          </div>
+          <span class="request-status pending">1 отклик</span>
+        </div>
+        <div style="font-weight:700;font-size:1rem;margin-bottom:6px">🎨 Логотип для бизнеса</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px"><span class="tag tag-orange">до 15 000₽</span><span class="tag tag-teal">1 неделя</span><span class="tag tag-violet">минимализм</span></div>
+        <div style="display:flex;gap:8px"><button class="btn btn-orange" style="font-size:.78rem;padding:6px 14px">✅ Могу сделать</button><button class="btn btn-outline" style="font-size:.78rem;padding:6px 14px;border-color:#f97316;color:#f97316">🔄 С изменениями</button></div>
+      </div>
+      <div class="request-card fade-in fade-in-d2">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#c8d8c0,#a8c8a0);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700">ДТ</div>
+            <div><div style="font-weight:700;font-size:.88rem">Денис Тайченачев</div><div style="font-size:.7rem;color:var(--txt-dim)">20 фев • ⏰ 3 дня</div></div>
+          </div>
+          <span class="request-status pending">0 откликов</span>
+        </div>
+        <div style="font-weight:700;font-size:1rem;margin-bottom:6px">🏡 Проект бани из кедра</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px"><span class="tag tag-orange">до 500 000₽</span><span class="tag tag-blue">📍 Ярославль</span></div>
+        <div style="display:flex;gap:8px"><button class="btn btn-orange" style="font-size:.78rem;padding:6px 14px">✅ Могу сделать</button><button class="btn btn-outline" style="font-size:.78rem;padding:6px 14px;border-color:#f97316;color:#f97316">🔄 С изменениями</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page" id="page-users"><h2 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;margin-bottom:16px">Участники <span style="font-size:.9rem;color:var(--txt-dim);font-weight:400">(570)</span></h2><div class="grid-3"><div class="card fade-in" style="text-align:center"><div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#d8c8e0,#c0a8d0);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:700">ОС</div><div style="font-weight:700">Сергеева Ольга</div><div style="font-size:.78rem;color:var(--txt-dim)">Маркетолог • Севастополь</div><div style="display:flex;gap:4px;justify-content:center;margin-top:6px"><span class="tag tag-violet" style="font-size:.65rem">🧠 CVCODE</span></div><button class="btn btn-primary" style="width:100%;margin-top:10px;font-size:.8rem">Связаться</button></div><div class="card fade-in fade-in-d1" style="text-align:center"><div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#c8d8c0,#a8c8a0);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:700">ВК</div><div style="font-weight:700">Виталий Кириллов</div><div style="font-size:.78rem;color:var(--txt-dim)">Маркетолог • Симферополь</div><button class="btn btn-primary" style="width:100%;margin-top:10px;font-size:.8rem">Связаться</button></div><div class="card fade-in fade-in-d2" style="text-align:center"><div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#d0d8c0,#b8c8a0);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:700">ДТ</div><div style="font-weight:700">Денис Тайченачев</div><div style="font-size:.78rem;color:var(--txt-dim)">Маркетолог • Севастополь</div><div style="display:flex;gap:4px;justify-content:center;margin-top:6px"><span class="tag tag-teal" style="font-size:.65rem">✅ Госуслуги</span></div><button class="btn btn-primary" style="width:100%;margin-top:10px;font-size:.8rem">Связаться</button></div></div></div>
+<div class="page" id="page-library"><h2 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;margin-bottom:16px">Библиотека</h2><div class="grid-2"><div class="card fade-in"><div class="card-title">100 инструментов для успешной жизни</div><div class="card-subtitle">Популярная тема • 617 просмотров</div></div><div class="card fade-in fade-in-d1"><div class="card-title">Социальная сеть OneUnion.ru — Нововведения</div><div class="card-subtitle">Кейс • 575 просмотров</div></div></div></div>
+
+</div><!-- /content -->
+</div><!-- /main -->
+</div><!-- /app -->
+
+<!-- ═══ HOCHU NAJTI FAB (💡 lightbulb — Idea) ═══ -->
+<div class="hochu-fab" onclick="toggleRequest()" title="💡 Запрос — Хочу найти">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 18h6"/>
+    <path d="M10 22h4"/>
+    <path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/>
+    <line x1="8" y1="1" x2="7" y2="0"/>
+    <line x1="16" y1="1" x2="17" y2="0"/>
+    <line x1="3" y1="7" x2="2" y2="7"/>
+    <line x1="21" y1="7" x2="22" y2="7"/>
+    <line x1="5" y1="3" x2="4" y2="2"/>
+    <line x1="19" y1="3" x2="20" y2="2"/>
+  </svg>
+</div>
+
+<!-- ═══ COORDINATOR FAB ═══ -->
+<div class="coordinator-fab" id="coordFab" onclick="toggleChat()">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3m-3.5-6.5-2 2m-9 9-2 2m13 0-2-2m-9-9-2-2"/></svg>
+</div>
+
+<!-- ═══ REQUEST PANEL (orange — «Хочу найти») ═══ -->
+<div class="request-panel" id="requestPanel">
+  <div class="request-header">
+    <div style="display:flex;align-items:center;gap:10px"><div style="width:8px;height:8px;border-radius:50%;background:#fbbf24;animation:blink 2s infinite"></div><span style="font-weight:700;font-size:.9rem">💡 Запрос — Хочу найти</span></div>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="cursor:pointer" onclick="toggleRequest()"><path d="M18 6L6 18M6 6l12 12"/></svg>
+  </div>
+  <div class="request-body">
+    <div class="req-msg bot">
+      <div class="req-bubble">Привет! 💡 Я помогу создать запрос. Расскажи, что ты ищешь — товар, услугу, мастера? Я сформирую карточку и разошлю подходящим исполнителям.</div>
+      <div class="req-time">Сейчас</div>
+    </div>
+    <div class="req-msg user">
+      <div class="req-bubble">Ищу розовый велосипед-круизер с корзинкой</div>
+      <div class="req-time" style="text-align:right">09:22</div>
+    </div>
+    <div class="req-msg bot">
+      <div class="req-bubble">Отличный выбор! Уточню детали:
+        <div style="margin-top:8px;padding:10px;background:rgba(249,115,22,.06);border:1px solid rgba(249,115,22,.15);border-radius:8px">
+          <div style="font-weight:700;font-size:.82rem;color:#f97316">🔍 Карточка запроса</div>
+          <div style="font-size:.78rem;color:var(--txt-dim);margin-top:6px">
+            🚲 Велосипед-круизер, розовый<br>
+            💰 Бюджет: <b>до 35 000₽</b><br>
+            📅 Срок: <b>до мая 2026</b><br>
+            📍 Локация: <b>Крым</b><br>
+            📋 С корзиной, женский, размер L
+          </div>
+          <div style="display:flex;gap:6px;margin-top:10px">
+            <button class="btn btn-orange" style="font-size:.75rem;padding:5px 14px;border-radius:8px">✅ Отправить</button>
+            <button class="btn btn-outline" style="font-size:.75rem;padding:5px 12px;border-color:#f97316;color:#f97316;border-radius:8px">✏️ Изменить</button>
+          </div>
+        </div>
+      </div>
+      <div class="req-time">09:23</div>
+    </div>
+    <div class="req-msg bot">
+      <div class="req-bubble">Запрос отправлен! 🎉 Найдено <b>3 подходящих мастера</b> (match 72–89%). Ожидай отклики — обычно в течение суток.</div>
+      <div class="req-time">09:24</div>
+    </div>
+  </div>
+  <div class="request-input-area">
+    <input class="request-input" placeholder="Опиши что ищешь..." />
+    <button class="request-send"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+  </div>
+</div>
+
+<!-- ═══ CHAT PANEL ═══ -->
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-header">
+    <div class="chat-header-left"><div class="dot"></div><span style="font-weight:700;font-size:.9rem">AI-Координатор</span></div>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="cursor:pointer" onclick="toggleChat()"><path d="M18 6L6 18M6 6l12 12"/></svg>
+  </div>
+  <div class="chat-body">
+    <div class="chat-msg bot"><div class="chat-bubble">Привет! Чем могу помочь? Могу найти эксперта, записать на консультацию, подсказать с проектом или проверить расписание. Можешь говорить голосом 🎤</div><div class="chat-time">Сейчас</div></div>
+  </div>
+  <div class="chat-input-area">
+    <button class="chat-mic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg></button>
+    <input class="chat-input" placeholder="Спроси координатора..." />
+    <button class="chat-send"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+function showPage(id, navEl) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const page = document.getElementById('page-' + id);
+  if (page) page.classList.add('active');
+  if (navEl) navEl.classList.add('active');
+  if (id === 'coordinator') drawWheel();
+  if (id === 'profile') drawWheel();
+}
+
+function toggleChat() {
+  document.getElementById('chatPanel').classList.toggle('open');
+  document.getElementById('requestPanel').classList.remove('open');
+}
+
+function toggleRequest() {
+  document.getElementById('requestPanel').classList.toggle('open');
+  document.getElementById('chatPanel').classList.remove('open');
+}
+
+// SVO Program functions (moved to DOMContentLoaded)
+
+// Jobs tabs
+function showJobTab(tab) {
+  document.getElementById('jobVacancies').style.display = tab === 'vacancies' ? 'block' : 'none';
+  document.getElementById('jobResumes').style.display = tab === 'resumes' ? 'block' : 'none';
+  document.getElementById('jobRequests').style.display = tab === 'requests' ? 'block' : 'none';
+  document.getElementById('jobTabVac').className = tab === 'vacancies' ? 'btn btn-primary' : 'btn btn-outline';
+  document.getElementById('jobTabRes').className = tab === 'resumes' ? 'btn btn-primary' : 'btn btn-outline';
+  const reqBtn = document.getElementById('jobTabReq');
+  if (tab === 'requests') {
+    reqBtn.className = 'btn btn-orange';
+    reqBtn.style.borderColor = '';
+    reqBtn.style.color = '';
+  } else {
+    reqBtn.className = 'btn btn-outline';
+    reqBtn.style.borderColor = '#f97316';
+    reqBtn.style.color = '#f97316';
+  }
+}
+
+// Life Balance Wheel
+function drawWheel() {
+  const canvas = document.getElementById('wheelCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const cx = 130, cy = 130, r = 110;
+  const data = [
+    { label: 'Здоровье', value: 5, color: '#ef4444' },
+    { label: 'Финансы', value: 6, color: '#f59e0b' },
+    { label: 'Карьера', value: 8, color: '#2ec4b6' },
+    { label: 'Отношения', value: 7, color: '#3b82f6' },
+    { label: 'Развитие', value: 9, color: '#2ec4b6' },
+    { label: 'Окружение', value: 7, color: '#3b82f6' },
+    { label: 'Отдых', value: 4, color: '#ef4444' },
+    { label: 'Духовное', value: 8, color: '#2ec4b6' }
+  ];
+  ctx.clearRect(0, 0, 260, 260);
+  const n = data.length;
+  const step = (Math.PI * 2) / n;
+  for (let i = 2; i <= 10; i += 2) {
+    ctx.beginPath();
+    ctx.arc(cx, cy, r * i / 10, 0, Math.PI * 2);
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.lineWidth = .5;
+    ctx.stroke();
+  }
+  for (let i = 0; i < n; i++) {
+    const angle = step * i - Math.PI / 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + Math.cos(angle) * r, cy + Math.sin(angle) * r);
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.lineWidth = .5;
+    ctx.stroke();
+  }
+  ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const angle = step * i - Math.PI / 2;
+    const val = r * data[i].value / 10;
+    const x = cx + Math.cos(angle) * val;
+    const y = cy + Math.sin(angle) * val;
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(46,196,182,.12)';
+  ctx.fill();
+  ctx.strokeStyle = '#2ec4b6';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  for (let i = 0; i < n; i++) {
+    const angle = step * i - Math.PI / 2;
+    const val = r * data[i].value / 10;
+    const x = cx + Math.cos(angle) * val;
+    const y = cy + Math.sin(angle) * val;
+    ctx.beginPath();
+    ctx.arc(x, y, 4, 0, Math.PI * 2);
+    ctx.fillStyle = data[i].color;
+    ctx.fill();
+    const lx = cx + Math.cos(angle) * (r + 14);
+    const ly = cy + Math.sin(angle) * (r + 14);
+    ctx.font = '500 9px Nunito Sans';
+    ctx.fillStyle = '#64748b';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(data[i].label, lx, ly);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  drawWheel();
+
+  // === LIVEMAP: Date Strip ===
+  (function(){
+    const strip = document.getElementById('lmDateStrip');
+    if(!strip) return;
+    const days = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+    const today = new Date(2026, 1, 23);
+    for(let i = -3; i <= 5; i++){
+      const d = new Date(today); d.setDate(d.getDate() + i);
+      const cell = document.createElement('div');
+      cell.className = 'lm-date-cell' + (i === 0 ? ' today' : '');
+      cell.innerHTML = '<div class="lm-date-dow">'+days[d.getDay()]+'</div><div class="lm-date-num">'+d.getDate()+'</div>';
+      strip.appendChild(cell);
+    }
+  })();
+
+  // === LIVEMAP: Time Labels ===
+  (function(){
+    const tl = document.getElementById('lmTimeAxis');
+    if(!tl) return;
+    const hourH = 60;
+    for(let h = 7; h <= 22; h++){
+      const label = document.createElement('div');
+      label.className = 'lm-time-label';
+      label.style.top = ((h - 7) * hourH) + 'px';
+      label.textContent = String(h).padStart(2,'0') + ':00';
+      tl.appendChild(label);
+    }
+  })();
+
+  // === LIVEMAP: Events with DRAG & DROP ===
+  (function(){
+    var container = document.getElementById('lmEventsContainer');
+    if(!container) return;
+    var hourH = 60, startH = 7, totalHours = 16;
+    for(var h = 0; h <= totalHours; h++){
+      var line = document.createElement('div');
+      line.className = 'lm-hour-line';
+      line.style.top = (h * hourH) + 'px';
+      container.appendChild(line);
+    }
+    container.style.height = (totalHours * hourH) + 'px';
+
+    var events = [
+      { start: 9.5, dur: 1, name: '☕ Кофеин на Тверской', detail: 'Планёрка + кофе', color: 'var(--teal)', confirmed: true },
+      { start: 11, dur: 1.5, name: '🤝 Андрей — логист', detail: '87% match', color: 'var(--blue)', confirmed: true },
+      { start: 13, dur: 0.75, name: '🍕 Обед', detail: 'Пиццерия у метро', color: 'var(--violet)', confirmed: true },
+      { start: 15, dur: 1, name: '💆 Ирина — терапевт', detail: '91% · ⭐4.9 · 10м пешком', color: 'var(--gold)', confirmed: false },
+      { start: 16.5, dur: 1, name: '🌾 Мария — фермер', detail: '87% · Забрать мёд', color: 'var(--emerald)', confirmed: false },
+    ];
+    var connElems = [], trvlElems = [];
+    function fmtT(h){ return String(Math.floor(h)).padStart(2,'0')+':'+String(Math.round((h%1)*60)).padStart(2,'0'); }
+    function rebuildConn(){
+      connElems.forEach(function(c){if(c.parentNode)c.parentNode.removeChild(c);});
+      trvlElems.forEach(function(c){if(c.parentNode)c.parentNode.removeChild(c);});
+      connElems=[];trvlElems=[];
+      var sorted=events.slice().sort(function(a,b){return a.start-b.start;});
+      var tt=['🚶 12м','🚶 8м','🚌 15м','🚶 7м'];
+      for(var i=0;i<sorted.length-1;i++){
+        var cT=(sorted[i].start+sorted[i].dur-startH)*hourH;
+        var nT=(sorted[i+1].start-startH)*hourH;
+        var gap=nT-cT;
+        if(gap>4){
+          var cn=document.createElement('div');cn.className='lm-chain-conn';
+          cn.style.cssText='position:absolute;top:'+cT+'px;left:50%;width:2px;height:'+gap+'px;margin-left:-1px;background:repeating-linear-gradient(to bottom,var(--teal) 0,var(--teal) 4px,transparent 4px,transparent 8px)';
+          container.appendChild(cn);connElems.push(cn);
+          var tv=document.createElement('div');
+          tv.style.cssText='position:absolute;top:'+(cT+gap/2-7)+'px;left:50%;transform:translateX(-50%);font-size:.55rem;color:var(--teal);font-weight:600;background:#fff;padding:1px 4px;border-radius:3px;border:1px solid var(--teal-mid);white-space:nowrap;z-index:6';
+          tv.textContent=tt[i]||'🚶 10м';container.appendChild(tv);trvlElems.push(tv);
+        }
+      }
+    }
+    events.forEach(function(ev){
+      var top=(ev.start-startH)*hourH, height=ev.dur*hourH;
+      var block=document.createElement('div');
+      block.className='lm-event'+(ev.confirmed?'':' suggested');
+      block.style.top=top+'px';block.style.height=height+'px';
+      block.style.background=ev.confirmed?ev.color:'rgba(255,255,255,.9)';
+      block.style.color=ev.confirmed?'#fff':'var(--txt)';
+      if(!ev.confirmed)block.style.borderColor=ev.color;
+      block.innerHTML='<div class="ev-time">'+fmtT(ev.start)+' — '+fmtT(ev.start+ev.dur)+'</div><div class="ev-name">'+ev.name+'</div><div class="ev-detail">'+ev.detail+'</div>';
+      container.appendChild(block);
+      // DRAG & DROP
+      var dragging=false,sY=0,oT=0;
+      function onDown(y){dragging=true;sY=y;oT=parseInt(block.style.top);block.classList.add('dragging');}
+      function onMove(y){if(!dragging)return;var dy=y-sY,nt=Math.max(0,Math.min(totalHours*hourH-parseInt(block.style.height),oT+dy));
+        var sn=Math.round(nt/(hourH/4))*(hourH/4);block.style.top=sn+'px';
+        ev.start=startH+sn/hourH;block.querySelector('.ev-time').textContent=fmtT(ev.start)+' — '+fmtT(ev.start+ev.dur);rebuildConn();}
+      function onUp(){if(dragging){dragging=false;block.classList.remove('dragging');}}
+      block.addEventListener('mousedown',function(e){onDown(e.clientY);e.preventDefault();});
+      block.addEventListener('touchstart',function(e){onDown(e.touches[0].clientY);},{passive:true});
+      document.addEventListener('mousemove',function(e){onMove(e.clientY);});
+      document.addEventListener('touchmove',function(e){if(dragging)onMove(e.touches[0].clientY);},{passive:true});
+      document.addEventListener('mouseup',onUp);document.addEventListener('touchend',onUp);
+    });
+    rebuildConn();
+    // NOW line
+    var nowTop=(12.22-startH)*hourH;
+    var nowLine=document.createElement('div');nowLine.className='lm-now-line';nowLine.style.top=nowTop+'px';
+    nowLine.innerHTML='<div style="position:absolute;left:-28px;top:-6px;font-size:.55rem;font-weight:700;color:var(--red);background:#fff;padding:1px 3px;border-radius:3px">12:13</div>';
+    container.appendChild(nowLine);
+    var lane=document.getElementById('lmSchedule');
+    setTimeout(function(){lane.scrollTop=nowTop-150;},100);
+  })();
+
+// === SVO FULL PROGRAM (embedded from standalone) ===
+(function(){
+  var svoTabsEl = document.getElementById('svoFullTabs');
+  var svoContentEl = document.getElementById('svoFullContent');
+  if(!svoTabsEl || !svoContentEl) return;
+
+  var houses=[{label:"60 м²",area:60,cost:2400000},{label:"80 м²",area:80,cost:3200000},{label:"100 м²",area:100,cost:4000000},{label:"120 м²",area:120,cost:4800000}];
+  var tabDefs=[{icon:"⚡",label:"Калькулятор"},{icon:"📊",label:"Фонды"},{icon:"🏆",label:"Очередь"},{icon:"🪙",label:"Токены"},{icon:"🗺",label:"Этапы"},{icon:"❓",label:"FAQ"}];
+  var statusDefs=[{n:"Новичок",kk:"×1.0",c:"#64748B"},{n:"Бронза",kk:"×1.5",c:"#CD7F32"},{n:"Серебро",kk:"×2.0",c:"#A8B5C4"},{n:"Золото",kk:"×2.5",c:"#EAB308"},{n:"Платина",kk:"×3.0",c:"#A78BFA"},{n:"Созидатель",kk:"×3.5",c:"#8B5CF6"},{n:"Основатель",kk:"×4.0",c:"#3B82F6"}];
+  var stageDefs=[{icon:"📋",t:"Вступление",d:"1–2 нед",info:"Заявление + документ СВО + 200₽. Онбординг."},{icon:"💰",t:"Накопление",d:"от 32 мес",info:"ЦПВ + ЦЧВ 10% + ЧВ 200₽."},{icon:"🔑",t:"Займ 0%",d:"ИГ ≥50%",info:"Ready-First: кто быстрее накопил."},{icon:"🏗",t:"Стройка",d:"4–6 мес",info:"Эскроу Сбербанк → СИП."},{icon:"🏡",t:"Дом",d:"готово!",info:"Росреестр, обременение ПК."}];
+  var faqDefs=[{q:"Что если я погибну?",a:"Семья — приоритет, заморозка 6 мес (ст. 16)",i:"🕊"},{q:"Нет связи из зоны СВО?",a:"Полная отсрочка (ст. 20)",i:"📡"},{q:"Застройщик обанкротился?",a:"Эскроу АСВ до 10 млн ₽ (ст. 18)",i:"🏗"},{q:"Хочу выйти?",a:"Возврат ЦПВ за 6 мес (ст. 10)",i:"🚪"},{q:"Что такое ТР?",a:"Токены развития — доля в росте кооператива.",i:"🪙"},{q:"Ready-First?",a:"Очередь по ИГ. ≥50% — займ гарантирован.",i:"🏆"}];
+
+  var st={tab:0,hi:1,cpv:50000,mem:64,mo:12,faq:-1};
+  var fmt=function(n){return n.toLocaleString("ru-RU");};
+  function num(l,v,s,c){return '<div style="text-align:center;padding:6px"><div style="font-size:11px;color:#94A3B8">'+l+'</div><div style="font-size:20px;font-weight:800;color:'+(c||'#22D3EE')+'">'+v+'</div>'+(s?'<div style="font-size:10px;color:#475569">'+s+'</div>':'')+'</div>';}
+  function calc(){var h=houses[st.hi],upe=h.cost/h.area,cchv=Math.round(st.cpv*0.1),tot=st.cpv+cchv+200,per=Math.ceil(h.cost/st.cpv);return{h:h,upe:upe,cpvU:+(st.cpv/upe).toFixed(1),cchv:cchv,tot:tot,per:per,ig50:Math.ceil(per*0.5),feu:cchv*0.5,fr:cchv*0.25,fa:cchv*0.2,fp:cchv*0.05,frAll:cchv*0.25*st.mem,trK:(cchv*0.25*st.mem*st.mo)/1e6};}
+
+  function render(){
+    var d=calc(),h='';
+    svoTabsEl.innerHTML=tabDefs.map(function(t,i){return '<button style="padding:7px 12px;border-radius:10px;border:'+(i===st.tab?'none':'1px solid #2D3B4E')+';cursor:pointer;font-weight:600;font-size:12px;background:'+(i===st.tab?'linear-gradient(135deg,#3B82F6,#22D3EE)':'#1A2634')+';color:'+(i===st.tab?'#fff':'#94A3B8')+';white-space:nowrap;flex-shrink:0;font-family:inherit;margin:0 1px 8px" data-t="'+i+'">'+t.icon+' '+t.label+'</button>';}).join('');
+    svoTabsEl.querySelectorAll('button').forEach(function(b){b.onclick=function(){st.tab=+b.dataset.t;render();};});
+
+    var C='background:#1A2634;border-radius:14px;padding:16px;margin-bottom:10px;border:1px solid #2D3B4E';
+    if(st.tab===0){
+      h+='<div style="'+C+'"><div style="font-size:15px;font-weight:700;color:#F8FAFC;margin-bottom:10px">🏠 Дом</div><div id="sHB" style="display:flex;gap:5px"></div></div>';
+      h+='<div style="'+C+'"><div style="font-size:15px;font-weight:700;color:#F8FAFC;margin-bottom:10px">💰 ЦПВ</div><input type="range" min="20000" max="150000" step="5000" value="'+st.cpv+'" id="sCS" style="width:100%;accent-color:#22D3EE"><div style="display:flex;justify-content:space-between;padding:5px 0"><span style="color:#94A3B8">ЦПВ</span><span style="font-size:26px;font-weight:800;color:#22D3EE">'+fmt(st.cpv)+' ₽</span></div><div style="font-size:11px;color:#475569">'+d.cpvU+' УПЕ/мес</div></div>';
+      h+='<div style="'+C+'"><div style="font-size:15px;font-weight:700;color:#F8FAFC;margin-bottom:10px">📊 Платёж</div>';
+      h+='<div style="display:flex;justify-content:space-between;padding:5px 0;font-size:13px;color:#94A3B8"><span>ЦПВ → фонд «Жильё»</span><span style="font-weight:700">'+fmt(st.cpv)+' ₽</span></div><div style="height:1px;background:#2D3B4E;margin:6px 0"></div>';
+      h+='<div style="display:flex;justify-content:space-between;padding:5px 0;font-size:13px;color:#94A3B8"><span>ЦЧВ 10%</span><span style="font-weight:700">'+fmt(d.cchv)+' ₽</span></div><div style="height:1px;background:#2D3B4E;margin:6px 0"></div>';
+      h+='<div style="display:flex;justify-content:space-between;padding:5px 0;font-size:13px;color:#94A3B8"><span>ЧВ</span><span style="font-weight:700">200 ₽</span></div>';
+      h+='<div style="margin-top:8px;padding:10px 12px;background:rgba(59,130,246,.13);border-radius:10px"><div style="display:flex;justify-content:space-between;font-size:15px"><span style="font-weight:700;color:#F8FAFC">ИТОГО / мес</span><span style="font-size:26px;font-weight:800;color:#22D3EE">'+fmt(d.tot)+' ₽</span></div></div></div>';
+      h+='<div style="background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.2);border-radius:14px;padding:16px"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'+num('Накопление',d.per+' мес','~'+(d.per/12).toFixed(1)+' лет','#F8FAFC')+num('Займ (ИГ≥50%)',d.ig50+' мес','гарантирован','#10B981')+'</div></div>';
+    }
+    if(st.tab===1){
+      h+='<div style="'+C+'"><div style="font-size:15px;font-weight:700;color:#F8FAFC;margin-bottom:10px">📊 Модель 50/25/20/5</div>';
+      h+='<div style="font-size:12px;color:#94A3B8;margin-bottom:8px">ЦЧВ = '+fmt(d.cchv)+' ₽/мес</div>';
+      h+='<div style="display:flex;border-radius:10px;overflow:hidden;margin-bottom:12px"><div style="width:50%;height:26px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;background:#3B82F6">ФЭУ 50%</div><div style="width:25%;height:26px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;background:#10B981">ФР 25%</div><div style="width:20%;height:26px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;background:#F59E0B">ФА 20%</div><div style="min-width:24px;width:5%;height:26px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;background:#475569">ФП</div></div>';
+      [[' ФЭУ',d.feu,'#3B82F6'],[' ФР',d.fr,'#10B981'],[' ФА',d.fa,'#F59E0B'],[' ФП',d.fp,'#475569']].forEach(function(x){h+='<div style="display:flex;justify-content:space-between;padding:5px 0;font-size:12px;color:#94A3B8"><span>'+x[0]+'</span><span style="font-weight:700;color:'+x[2]+'">'+fmt(x[1])+' × '+st.mem+' = '+fmt(Math.round(x[1]*st.mem))+' ₽</span></div>';});
+      h+='<div style="margin-top:10px;font-size:11px;color:#94A3B8">Пайщиков: <input type="range" min="10" max="100" value="'+st.mem+'" id="sMS" style="width:100px;vertical-align:middle;accent-color:#22D3EE"> <b style="color:#22D3EE" id="sMV">'+st.mem+'</b></div></div>';
+    }
+    if(st.tab===2){
+      h+='<div style="'+C+'"><div style="font-size:15px;font-weight:700;color:#F8FAFC;margin-bottom:10px">🏆 Ready-First</div>';
+      h+='<div style="font-size:12px;color:#94A3B8;margin-bottom:10px">ИГ = накоплено / цель × 100%</div>';
+      h+='<div style="display:flex;border-radius:10px;overflow:hidden;height:30px;margin-bottom:10px"><div style="width:20%;display:flex;align-items:center;justify-content:center;background:#EF4444;color:#fff;font-size:11px;font-weight:700">🔴 <20%</div><div style="width:30%;display:flex;align-items:center;justify-content:center;background:#F59E0B;color:#fff;font-size:11px;font-weight:700">🟡 20–49%</div><div style="width:50%;display:flex;align-items:center;justify-content:center;background:#10B981;color:#fff;font-size:11px;font-weight:700">🟢 ≥50%</div></div></div>';
+      h+='<div style="'+C+'">';
+      var pts=[3,6,12,18,24,d.ig50,d.per].filter(function(v,i,a){return a.indexOf(v)===i&&v>0;}).sort(function(a,b){return a-b;}).slice(0,7);
+      pts.forEach(function(m){var acc=st.cpv*m,ig=Math.min(100,Math.round(acc/d.h.cost*100)),zc=ig>=50?'#10B981':ig>=20?'#F59E0B':'#EF4444';
+        h+='<div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:12px;color:#94A3B8;margin-bottom:4px"><span>'+m+' мес</span><span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;background:'+zc+'33;color:'+zc+'">ИГ '+ig+'%</span></div><div style="height:6px;background:#2D3B4E;border-radius:3px"><div style="height:6px;border-radius:3px;width:'+ig+'%;background:'+zc+'"></div></div></div>';});
+      h+='</div>';
+    }
+    if(st.tab===3){
+      h+='<div style="'+C+'"><div style="font-size:15px;font-weight:700;color:#F8FAFC;margin-bottom:10px">🪙 Токены развития</div>';
+      h+='<div style="font-size:12px;color:#94A3B8;margin-bottom:8px">1 000 000 ТР навсегда</div>';
+      h+='<div style="display:flex;border-radius:10px;overflow:hidden;margin-bottom:12px"><div style="width:60%;height:26px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;background:#3B82F6">ТЭУ 60%</div><div style="width:30%;height:26px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;background:#10B981">ТА 30%</div><div style="min-width:36px;width:10%;height:26px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;background:#F59E0B">10%</div></div>';
+      h+='<div style="padding:8px 12px;background:#0F1923;border-radius:10px;margin-bottom:10px"><span style="font-size:12px;color:#94A3B8">Прогноз (мес): </span><input type="range" min="1" max="36" value="'+st.mo+'" id="sMoS" style="width:120px;vertical-align:middle;accent-color:#22D3EE"> <b style="color:#22D3EE" id="sMoV">'+st.mo+'</b></div>';
+      h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'+num('ФР за период',fmt(Math.round(d.frAll*st.mo))+' ₽','','#10B981')+num('Курс 1 ТР',d.trK.toFixed(4)+' ₽','','#22D3EE')+'</div></div>';
+      h+='<div style="'+C+'"><div style="font-size:15px;font-weight:700;color:#F8FAFC;margin-bottom:10px">🎖 Статусы</div><div style="display:flex;flex-wrap:wrap;gap:5px">';
+      statusDefs.forEach(function(x){h+='<div style="padding:5px 10px;border-radius:8px;background:'+x.c+'22;border:1.5px solid '+x.c+'66"><div style="font-weight:700;font-size:12px;color:'+x.c+'">'+x.n+'</div><div style="font-size:10px;color:#475569">'+x.kk+'</div></div>';});
+      h+='</div></div>';
+    }
+    if(st.tab===4){
+      h+='<div style="'+C+'">';
+      stageDefs.forEach(function(x,i){h+='<div style="display:flex;gap:10px;margin-bottom:10px"><div style="display:flex;flex-direction:column;align-items:center;min-width:36px"><div style="width:36px;height:36px;border-radius:50%;background:rgba(59,130,246,.2);display:flex;align-items:center;justify-content:center;font-size:18px">'+x.icon+'</div>'+(i<stageDefs.length-1?'<div style="flex:1;width:2px;background:#2D3B4E;margin:4px auto 0"></div>':'')+'</div><div style="flex:1;background:#0F1923;border-radius:10px;padding:10px 12px"><div style="font-weight:700;font-size:13px;color:#F8FAFC">'+x.t+' <span style="font-size:11px;color:#475569">('+x.d+')</span></div><div style="font-size:12px;color:#94A3B8;margin-top:3px">'+x.info+'</div></div></div>';});
+      h+='</div>';
+    }
+    if(st.tab===5){
+      h+='<div style="'+C+'">';
+      faqDefs.forEach(function(f,i){var o=st.faq===i;h+='<div data-fq="'+i+'" style="padding:10px 12px;margin-bottom:4px;background:'+(o?'rgba(59,130,246,.13)':'#0F1923')+';border-radius:10px;cursor:pointer;border:1px solid '+(o?'rgba(59,130,246,.27)':'transparent')+'"><div style="font-weight:700;font-size:13px;display:flex;justify-content:space-between;color:#E2E8F0"><span>'+f.i+' '+f.q+'</span><span style="font-size:11px;color:#475569;transform:rotate('+(o?180:0)+'deg)">▼</span></div>'+(o?'<div style="font-size:12px;color:#94A3B8;margin-top:6px;line-height:1.5">'+f.a+'</div>':'')+'</div>';});
+      h+='</div>';
+    }
+    svoContentEl.innerHTML=h;
+    // Bind
+    if(st.tab===0){
+      var hb=document.getElementById('sHB');
+      if(hb){hb.innerHTML=houses.map(function(x,i){return '<button style="flex:1;padding:10px 6px;text-align:center;border-radius:10px;border:'+(i===st.hi?'none':'1px solid #2D3B4E')+';cursor:pointer;background:'+(i===st.hi?'linear-gradient(135deg,#3B82F6,#22D3EE)':'#1A2634')+';color:'+(i===st.hi?'#fff':'#94A3B8')+';font-family:inherit" data-h="'+i+'"><div style="font-size:14px;font-weight:700">'+x.label+'</div><div style="font-size:11px;opacity:.8;margin-top:2px">'+fmt(x.cost)+' ₽</div></button>';}).join('');
+      hb.querySelectorAll('button').forEach(function(b){b.onclick=function(){st.hi=+b.dataset.h;render();};});}
+      var cs=document.getElementById('sCS');if(cs)cs.oninput=function(){st.cpv=+cs.value;render();};}
+    if(st.tab===1){var ms=document.getElementById('sMS');if(ms)ms.oninput=function(){st.mem=+ms.value;render();};}
+    if(st.tab===3){var mos=document.getElementById('sMoS');if(mos)mos.oninput=function(){st.mo=+mos.value;render();};}
+    if(st.tab===5){svoContentEl.querySelectorAll('[data-fq]').forEach(function(el){el.onclick=function(){st.faq=st.faq===+el.dataset.fq?-1:+el.dataset.fq;render();};});}
+  }
+
+  window.showSvoProgram=function(){document.getElementById('programs-list-view').style.display='none';document.getElementById('svo-program-detail').style.display='block';render();};
+  window.hideSvoProgram=function(){document.getElementById('programs-list-view').style.display='block';document.getElementById('svo-program-detail').style.display='none';};
+})();
+
+});
+</script>
+</body>
+</html>
