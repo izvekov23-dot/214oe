@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OneUnion v3.0 × Осознанное Единство</title>
+<title>OneUnion v4.0 × Осознанное Единство</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Nunito+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -386,6 +386,13 @@ body{background:var(--bg);color:var(--txt);font-family:'Nunito Sans',sans-serif;
       <span class="badge" style="background:var(--gold)">new</span>
     </div>
     <div class="nav-divider"></div>
+    <div class="nav-label">Рефлексия</div>
+    <div class="nav-item" onclick="showPage('diary',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M12 6v7"/><path d="M9 10l3 3 3-3"/></svg>
+      Дневник
+      <span class="badge" style="background:var(--gold)">new</span>
+    </div>
+    <div class="nav-divider"></div>
     <div class="nav-label">Библиотека</div>
     <div class="nav-item" onclick="showPage('library',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
@@ -398,7 +405,7 @@ body{background:var(--bg);color:var(--txt);font-family:'Nunito Sans',sans-serif;
     </div>
   </nav>
   <div class="sidebar-footer">
-    OneUnion v3.0 × ОЕ<br>ПК «214ПК» | <a href="#">Связаться</a>
+    OneUnion v4.0 × ОЕ<br>ПК «214ПК» | <a href="#">Связаться</a>
   </div>
 </aside>
 
@@ -431,6 +438,16 @@ body{background:var(--bg);color:var(--txt);font-family:'Nunito Sans',sans-serif;
   <div class="grid-main">
     <div>
       <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;margin-bottom:16px">Лента</h2>
+      <!-- Predictive match from diaries -->
+      <div class="card fade-in" style="background:linear-gradient(135deg,rgba(249,115,22,.04),rgba(139,92,246,.04));border-color:rgba(249,115,22,.2);margin-bottom:16px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#f97316,#e86a10);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.1rem;flex-shrink:0">📓</div>
+          <div style="flex:1">
+            <div style="font-weight:700;font-size:.88rem;color:#f97316">Пересечение дневников <span style="font-size:.65rem;font-weight:400;color:var(--txt-dim);background:rgba(249,115,22,.1);padding:1px 6px;border-radius:8px;margin-left:4px">новое</span></div>
+            <div style="font-size:.82rem;color:var(--txt-dim);margin-top:2px">Сергей Волков независимо исследует кооперативную экономику — совпадение КУДА <b style="color:#f97316">91%</b>. Координатор предлагает мастермайнд-группу. <a href="#" style="color:#f97316;font-weight:600">Подробнее →</a></div>
+          </div>
+        </div>
+      </div>
       <!-- Coordinator suggestion banner -->
       <div class="card fade-in" style="background:linear-gradient(135deg,var(--teal-soft),rgba(59,130,246,.05));border-color:var(--teal-mid);margin-bottom:16px">
         <div style="display:flex;align-items:center;gap:12px">
@@ -605,7 +622,7 @@ body{background:var(--bg);color:var(--txt);font-family:'Nunito Sans',sans-serif;
       <!-- 5 LAYERS -->
       <div class="card fade-in fade-in-d1" style="margin-bottom:16px">
         <div class="card-title">Многослойный профиль</div>
-        <div class="card-subtitle">5 слоёв для точного matching</div>
+        <div class="card-subtitle">6 слоёв для точного matching (ЧТО/ПОЧЕМУ/КАК/КУДА + CVCODE + Астро)</div>
 
         <div class="layer">
           <div class="layer-header">
@@ -643,17 +660,33 @@ body{background:var(--bg);color:var(--txt);font-family:'Nunito Sans',sans-serif;
             <div class="layer-pct" style="color:var(--emerald)">88%</div>
           </div>
           <div style="display:flex;flex-wrap:wrap;gap:4px">
-            <span class="tag tag-emerald">Голос/Telegram</span>
+            <span class="tag tag-emerald">Голос/Веб</span>
             <span class="tag tag-emerald">Утро/день</span>
             <span class="tag tag-emerald">Онлайн</span>
             <span class="tag tag-emerald">Малые группы</span>
           </div>
         </div>
 
+        <div class="layer" style="border-color:rgba(249,115,22,.2);background:rgba(249,115,22,.02)">
+          <div class="layer-header">
+            <div class="layer-icon" style="background:rgba(249,115,22,.1);color:#f97316">🧭</div>
+            <div class="layer-name" style="color:#f97316">Слой 4: КУДА <span style="font-size:.65rem;font-weight:400;color:var(--txt-dim);background:rgba(249,115,22,.1);padding:1px 6px;border-radius:8px;margin-left:4px">новый</span></div>
+            <div class="layer-pct" style="color:#f97316">74%</div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:4px">
+            <span class="tag tag-orange">Нейросеть из людей</span>
+            <span class="tag tag-orange">Кооперативная экономика</span>
+            <span class="tag tag-orange">AI-координация</span>
+          </div>
+          <div style="margin-top:8px;padding:8px 10px;background:rgba(249,115,22,.05);border-radius:var(--radius-sm);font-size:.75rem;color:var(--txt-dim)">
+            📓 Источник: записи дневника (12 записей) · Обновлено: 22 фев
+          </div>
+        </div>
+
         <div class="layer">
           <div class="layer-header">
             <div class="layer-icon" style="background:var(--violet-soft);color:var(--violet)">🧠</div>
-            <div class="layer-name" style="color:var(--violet)">Слой 4: CVCODE</div>
+            <div class="layer-name" style="color:var(--violet)">Слой 5: CVCODE</div>
             <div class="layer-pct" style="color:var(--violet)">Пройден</div>
           </div>
           <div style="display:flex;flex-wrap:wrap;gap:4px">
@@ -666,7 +699,7 @@ body{background:var(--bg);color:var(--txt);font-family:'Nunito Sans',sans-serif;
         <div class="layer">
           <div class="layer-header">
             <div class="layer-icon" style="background:var(--warm-soft);color:var(--warm)">🔮</div>
-            <div class="layer-name" style="color:var(--warm)">Слой 5: Астро</div>
+            <div class="layer-name" style="color:var(--warm)">Слой 6: Астро</div>
             <div class="layer-pct" style="color:var(--warm)">Указано</div>
           </div>
           <div style="font-size:.8rem;color:var(--txt-dim)">
@@ -705,6 +738,8 @@ body{background:var(--bg);color:var(--txt);font-family:'Nunito Sans',sans-serif;
           <div class="progress"><div class="progress-fill" style="width:89%;background:var(--gold)"></div></div>
           <div style="display:flex;justify-content:space-between;font-size:.82rem;margin:8px 0 4px"><span>Стиль</span><span style="font-weight:700;color:var(--emerald)">82%</span></div>
           <div class="progress"><div class="progress-fill" style="width:82%;background:var(--emerald)"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:.82rem;margin:8px 0 4px"><span>Направление</span><span style="font-weight:700;color:#f97316">76%</span></div>
+          <div class="progress"><div class="progress-fill" style="width:76%;background:#f97316"></div></div>
           <div style="display:flex;justify-content:space-between;font-size:.82rem;margin:8px 0 4px"><span>CVCODE</span><span style="font-weight:700;color:var(--violet)">91%</span></div>
           <div class="progress"><div class="progress-fill" style="width:91%;background:var(--violet)"></div></div>
           <div style="margin-top:12px;text-align:center">
@@ -913,9 +948,9 @@ body{background:var(--bg);color:var(--txt);font-family:'Nunito Sans',sans-serif;
         <!-- Legend with Ищу рядом -->
         <div class="lm-legend">
           <div style="font-weight:700;margin-bottom:3px">Легенда</div>
+          <div class="lm-legend-item"><div class="lm-legend-dot" style="background:var(--red)"></div>Ваша позиция</div>
           <div class="lm-legend-item"><div class="lm-legend-dot" style="background:var(--teal)"></div>Подтверждено</div>
           <div class="lm-legend-item"><div class="lm-legend-dot" style="border:2px dashed var(--gold);background:none"></div>Предложено AI</div>
-          <div class="lm-legend-item"><div class="lm-legend-dot" style="background:var(--red)"></div>Ваша позиция</div>
           <div class="lm-legend-item"><div class="lm-legend-dot" style="background:#f97316"></div>Запросы</div>
           <div class="lm-legend-item"><svg width="18" height="5"><line x1="0" y1="2.5" x2="18" y2="2.5" stroke="var(--teal)" stroke-width="2" stroke-dasharray="4,3"/></svg>Маршруты</div>
           <button class="btn btn-orange" style="font-size:.62rem;padding:3px 10px;margin-top:6px;width:100%;border-radius:var(--radius-sm)" onclick="toggleRequest()">📍 Ищу рядом</button>
@@ -956,25 +991,180 @@ body{background:var(--bg);color:var(--txt);font-family:'Nunito Sans',sans-serif;
 <!-- ═══════ STUB PAGES ═══════ -->
 <div class="page" id="page-projects">
   <div id="projects-list">
-    <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;margin-bottom:16px">Проекты</h2>
-    <div class="grid-3">
-      <div class="card fade-in">
-        <div style="font-size:2rem;margin-bottom:8px">☕</div>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;margin-bottom:4px">Проекты <span style="font-size:.9rem;color:var(--txt-dim);font-weight:400">(8 этапов жизненного цикла)</span></h2>
+    <p style="font-size:.82rem;color:var(--txt-dim);margin-bottom:16px">Идея → Оформление → Публикация → Верификация → Голосование → Финансирование → Реализация → Распределение 50/25/20/5</p>
+
+    <!-- Lifecycle Pipeline -->
+    <div class="card fade-in" style="margin-bottom:16px;padding:16px 20px;background:linear-gradient(135deg,rgba(59,130,246,.03),rgba(46,196,182,.03))">
+      <div style="font-weight:700;font-size:.88rem;margin-bottom:12px">📋 Жизненный цикл проектов</div>
+      <div style="display:flex;gap:2px;margin-bottom:8px;flex-wrap:wrap">
+        <div style="flex:1;min-width:70px;text-align:center;padding:8px 4px;border-radius:8px;background:var(--emerald-soft);font-size:.65rem;font-weight:700;color:var(--emerald)">1. Идея</div>
+        <div style="flex:1;min-width:70px;text-align:center;padding:8px 4px;border-radius:8px;background:var(--blue-soft);font-size:.65rem;font-weight:700;color:var(--blue)">2. Оформление</div>
+        <div style="flex:1;min-width:70px;text-align:center;padding:8px 4px;border-radius:8px;background:var(--teal-soft);font-size:.65rem;font-weight:700;color:var(--teal)">3. Публикация</div>
+        <div style="flex:1;min-width:70px;text-align:center;padding:8px 4px;border-radius:8px;background:var(--violet-soft);font-size:.65rem;font-weight:700;color:var(--violet)">4. Верификация</div>
+        <div style="flex:1;min-width:70px;text-align:center;padding:8px 4px;border-radius:8px;background:var(--gold-soft);font-size:.65rem;font-weight:700;color:var(--gold)">5. Голосование</div>
+        <div style="flex:1;min-width:70px;text-align:center;padding:8px 4px;border-radius:8px;background:var(--warm-soft);font-size:.65rem;font-weight:700;color:var(--warm)">6. Финансирование</div>
+        <div style="flex:1;min-width:70px;text-align:center;padding:8px 4px;border-radius:8px;background:var(--rose-soft);font-size:.65rem;font-weight:700;color:var(--rose)">7. Реализация</div>
+        <div style="flex:1;min-width:70px;text-align:center;padding:8px 4px;border-radius:8px;background:rgba(16,185,129,.15);font-size:.65rem;font-weight:700;color:var(--emerald)">8. 50/25/20/5</div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+      <button class="btn btn-primary" style="font-size:.8rem">Все проекты</button>
+      <button class="btn btn-outline" style="font-size:.8rem">Мои проекты</button>
+      <button class="btn btn-outline" style="font-size:.8rem">Голосование</button>
+      <button class="btn btn-outline" style="font-size:.8rem">Краудфандинг</button>
+      <button class="btn btn-primary" style="font-size:.8rem;margin-left:auto;background:linear-gradient(135deg,var(--emerald),#0e9f6e)">+ Новый проект</button>
+    </div>
+
+    <!-- Project cards with full lifecycle -->
+    <div class="grid-2">
+      <!-- Project 1: Active with voting -->
+      <div class="card fade-in" style="position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;width:4px;height:100%;background:var(--gold)"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <div style="font-size:1.5rem">☕</div>
+          <span style="background:var(--gold-soft);color:var(--gold);font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:12px">🗳 Голосование</span>
+        </div>
         <div class="card-title">Кофейня с коворкингом</div>
-        <div class="card-subtitle">4 участника • Прогресс 65%</div>
-        <div class="progress"><div class="progress-fill" style="width:65%;background:var(--teal)"></div></div>
+        <div class="card-subtitle">Автор: Андрей Гартунов • 4 участника</div>
+
+        <!-- AI Scoring - 3 pillars -->
+        <div style="margin:10px 0;padding:10px;background:var(--bg);border-radius:var(--radius-sm)">
+          <div style="font-size:.72rem;font-weight:700;color:var(--txt-dim);margin-bottom:6px">AI-Скоринг (три опоры)</div>
+          <div style="display:flex;gap:8px">
+            <div style="flex:1;text-align:center">
+              <div style="font-size:.65rem;color:var(--txt-dim)">💰 Ресурсы</div>
+              <div style="font-size:1.1rem;font-weight:800;color:var(--blue)">7</div>
+              <div class="progress" style="margin-top:2px"><div class="progress-fill" style="width:70%;background:var(--blue)"></div></div>
+            </div>
+            <div style="flex:1;text-align:center">
+              <div style="font-size:.65rem;color:var(--txt-dim)">🙏 Здоровье</div>
+              <div style="font-size:1.1rem;font-weight:800;color:var(--emerald)">8</div>
+              <div class="progress" style="margin-top:2px"><div class="progress-fill" style="width:80%;background:var(--emerald)"></div></div>
+            </div>
+            <div style="flex:1;text-align:center">
+              <div style="font-size:.65rem;color:var(--txt-dim)">❤️ Отношения</div>
+              <div style="font-size:1.1rem;font-weight:800;color:var(--rose)">9</div>
+              <div class="progress" style="margin-top:2px"><div class="progress-fill" style="width:90%;background:var(--rose)"></div></div>
+            </div>
+          </div>
+          <div style="text-align:center;margin-top:6px;font-size:.72rem;color:var(--txt-dim)">Сводный: <b style="color:var(--teal);font-size:.88rem">8.0/10</b></div>
+        </div>
+
+        <!-- Voting progress -->
+        <div style="margin:8px 0">
+          <div style="display:flex;justify-content:space-between;font-size:.78rem;margin-bottom:4px"><span>Голосование</span><span style="font-weight:700;color:var(--emerald)">78% за</span></div>
+          <div style="display:flex;border-radius:4px;overflow:hidden;height:8px">
+            <div style="width:78%;background:var(--emerald)"></div>
+            <div style="width:12%;background:var(--red)"></div>
+            <div style="width:10%;background:var(--border)"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:.65rem;color:var(--txt-dim);margin-top:2px"><span>🟢 32 за</span><span>🔴 5 против</span><span>⚪ 4 возд.</span></div>
+        </div>
+
+        <!-- Expert councils -->
+        <div style="display:flex;gap:3px;flex-wrap:wrap;margin:6px 0">
+          <span class="tag tag-blue" style="font-size:.6rem">💰 Фин: 7/10</span>
+          <span class="tag tag-emerald" style="font-size:.6rem">⚖️ Юр: ✅</span>
+          <span class="tag tag-violet" style="font-size:.6rem">🔧 Тех: 8/10</span>
+          <span class="tag tag-gold" style="font-size:.6rem">🤖 AI: 8.0</span>
+        </div>
+
+        <div style="display:flex;gap:6px;margin-top:10px">
+          <button class="btn btn-primary" style="flex:1;font-size:.78rem;padding:6px">🗳 Голосовать</button>
+          <button class="btn btn-outline" style="flex:1;font-size:.78rem;padding:6px">Подробнее</button>
+        </div>
       </div>
-      <div class="card fade-in fade-in-d1">
-        <div style="font-size:2rem;margin-bottom:8px">🚚</div>
+
+      <!-- Project 2: Crowdfunding stage -->
+      <div class="card fade-in fade-in-d1" style="position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;width:4px;height:100%;background:var(--warm)"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <div style="font-size:1.5rem">🪵</div>
+          <span style="background:var(--warm-soft);color:var(--warm);font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:12px">💰 Краудфандинг</span>
+        </div>
+        <div class="card-title">Столярная мастерская</div>
+        <div class="card-subtitle">Автор: Иван Сергеев (СВО) • 3 участника</div>
+
+        <!-- Crowdfunding progress -->
+        <div style="margin:12px 0;padding:12px;background:linear-gradient(135deg,rgba(245,158,11,.05),rgba(212,168,67,.05));border:1px solid rgba(245,158,11,.15);border-radius:var(--radius-sm)">
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+            <span style="font-size:.82rem;font-weight:700;color:var(--warm)">Собрано</span>
+            <span style="font-size:1.1rem;font-weight:800;color:var(--warm)">482 000 ₽</span>
+          </div>
+          <div class="progress" style="height:10px;margin-bottom:4px"><div class="progress-fill" style="width:74%;background:linear-gradient(90deg,var(--warm),var(--gold))"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:.72rem;color:var(--txt-dim)"><span>74% цели</span><span>Цель: 650 000 ₽</span></div>
+          <div style="display:flex;gap:6px;margin-top:8px;font-size:.72rem;color:var(--txt-dim)">
+            <span>👥 12 инвесторов</span><span>⏰ 14 дней</span><span>🎯 Грант «Агромотиватор»: 500К</span>
+          </div>
+        </div>
+
+        <!-- AI Scoring compact -->
+        <div style="display:flex;gap:3px;flex-wrap:wrap;margin:6px 0">
+          <span class="tag tag-blue" style="font-size:.6rem">💰 Рес: 6/10</span>
+          <span class="tag tag-emerald" style="font-size:.6rem">🙏 Здор: 8/10</span>
+          <span class="tag tag-rose" style="font-size:.6rem">❤️ Отн: 9/10</span>
+          <span class="tag tag-gold" style="font-size:.6rem">🤖 AI: 7.7</span>
+        </div>
+
+        <div style="display:flex;gap:6px;margin-top:10px">
+          <button class="btn btn-gold" style="flex:1;font-size:.78rem;padding:6px">💰 Инвестировать</button>
+          <button class="btn btn-outline" style="flex:1;font-size:.78rem;padding:6px">Подробнее</button>
+        </div>
+      </div>
+
+      <!-- Project 3: Realization -->
+      <div class="card fade-in fade-in-d2" style="position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;width:4px;height:100%;background:var(--teal)"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <div style="font-size:1.5rem">🚚</div>
+          <span style="background:var(--teal-soft);color:var(--teal);font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:12px">🔨 Реализация</span>
+        </div>
         <div class="card-title">Фермерская доставка</div>
-        <div class="card-subtitle">3 участника • Прогресс 40%</div>
-        <div class="progress"><div class="progress-fill" style="width:40%;background:var(--blue)"></div></div>
+        <div class="card-subtitle">3 участника • Прогресс 65%</div>
+        <div class="progress" style="margin:8px 0"><div class="progress-fill" style="width:65%;background:var(--teal)"></div></div>
+        <div style="font-size:.75rem;color:var(--txt-dim);margin-bottom:6px">Milestone 2/3: «Логистика настроена» — <b style="color:var(--teal)">завершён</b></div>
+
+        <!-- 50/25/20/5 distribution -->
+        <div class="fund-bar" style="height:20px;margin:8px 0">
+          <div class="fund-seg" style="width:50%;background:var(--blue);font-size:.6rem">50% ФЭУ</div>
+          <div class="fund-seg" style="width:25%;background:var(--emerald);font-size:.6rem">25% ФР</div>
+          <div class="fund-seg" style="width:20%;background:var(--warm);font-size:.6rem">20% ФА</div>
+          <div class="fund-seg" style="width:5%;background:var(--txt-light);min-width:20px;font-size:.5rem">ФП</div>
+        </div>
+        <div style="font-size:.72rem;color:var(--txt-dim)">ДС за Milestone 2: <b>45 000₽</b> → распределено</div>
       </div>
-      <div class="card fade-in fade-in-d2">
-        <div style="font-size:2rem;margin-bottom:8px">🎓</div>
+
+      <!-- Project 4: Idea stage -->
+      <div class="card fade-in fade-in-d3" style="position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;width:4px;height:100%;background:var(--emerald)"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <div style="font-size:1.5rem">🎓</div>
+          <span style="background:var(--emerald-soft);color:var(--emerald);font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:12px">💡 Идея</span>
+        </div>
         <div class="card-title">Образовательный центр</div>
-        <div class="card-subtitle">2 участника • Прогресс 20%</div>
-        <div class="progress"><div class="progress-fill" style="width:20%;background:var(--warm)"></div></div>
+        <div class="card-subtitle">Автор: Ольга Сергеева • Из дневника</div>
+        <div style="margin-top:8px;padding:8px 10px;background:rgba(249,115,22,.05);border:1px dashed rgba(249,115,22,.2);border-radius:var(--radius-sm);font-size:.75rem;color:var(--txt-dim)">
+          📓 Родился из дневника: 5 записей о кооперативном образовании
+        </div>
+        <div style="display:flex;gap:6px;margin-top:10px">
+          <button class="btn btn-primary" style="flex:1;font-size:.78rem;padding:6px;background:linear-gradient(135deg,var(--emerald),#0e9f6e)">✨ Оформить проект</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expert councils summary -->
+    <div class="card fade-in fade-in-d4" style="margin-top:16px">
+      <div class="card-title">Экспертные советы</div>
+      <div class="card-subtitle">6 направлений верификации проектов</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px">
+        <div style="text-align:center;padding:10px;background:var(--blue-soft);border-radius:var(--radius-sm)"><div style="font-size:1.2rem">💰</div><div style="font-size:.78rem;font-weight:700;color:var(--blue)">Финансовый</div><div style="font-size:.65rem;color:var(--txt-dim)">3 эксперта</div></div>
+        <div style="text-align:center;padding:10px;background:var(--emerald-soft);border-radius:var(--radius-sm)"><div style="font-size:1.2rem">⚖️</div><div style="font-size:.78rem;font-weight:700;color:var(--emerald)">Юридический</div><div style="font-size:.65rem;color:var(--txt-dim)">2 эксперта</div></div>
+        <div style="text-align:center;padding:10px;background:var(--violet-soft);border-radius:var(--radius-sm)"><div style="font-size:1.2rem">🔧</div><div style="font-size:.78rem;font-weight:700;color:var(--violet)">Технический</div><div style="font-size:.65rem;color:var(--txt-dim)">4 эксперта</div></div>
+        <div style="text-align:center;padding:10px;background:var(--warm-soft);border-radius:var(--radius-sm)"><div style="font-size:1.2rem">🚛</div><div style="font-size:.78rem;font-weight:700;color:var(--warm)">Логистический</div><div style="font-size:.65rem;color:var(--txt-dim)">2 эксперта</div></div>
+        <div style="text-align:center;padding:10px;background:var(--rose-soft);border-radius:var(--radius-sm)"><div style="font-size:1.2rem">🤖</div><div style="font-size:.78rem;font-weight:700;color:var(--rose)">AI-скоринг</div><div style="font-size:.65rem;color:var(--txt-dim)">автоматический</div></div>
+        <div style="text-align:center;padding:10px;background:var(--gold-soft);border-radius:var(--radius-sm)"><div style="font-size:1.2rem">🙏</div><div style="font-size:.78rem;font-weight:700;color:var(--gold)">Этический</div><div style="font-size:.65rem;color:var(--txt-dim)">3 эксперта</div></div>
       </div>
     </div>
   </div>
@@ -1045,7 +1235,264 @@ body{background:var(--bg);color:var(--txt);font-family:'Nunito Sans',sans-serif;
   </div>
 </div>
 <div class="page" id="page-users"><h2 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;margin-bottom:16px">Участники <span style="font-size:.9rem;color:var(--txt-dim);font-weight:400">(570)</span></h2><div class="grid-3"><div class="card fade-in" style="text-align:center"><div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#d8c8e0,#c0a8d0);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:700">ОС</div><div style="font-weight:700">Сергеева Ольга</div><div style="font-size:.78rem;color:var(--txt-dim)">Маркетолог • Севастополь</div><div style="display:flex;gap:4px;justify-content:center;margin-top:6px"><span class="tag tag-violet" style="font-size:.65rem">🧠 CVCODE</span></div><button class="btn btn-primary" style="width:100%;margin-top:10px;font-size:.8rem">Связаться</button></div><div class="card fade-in fade-in-d1" style="text-align:center"><div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#c8d8c0,#a8c8a0);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:700">ВК</div><div style="font-weight:700">Виталий Кириллов</div><div style="font-size:.78rem;color:var(--txt-dim)">Маркетолог • Симферополь</div><button class="btn btn-primary" style="width:100%;margin-top:10px;font-size:.8rem">Связаться</button></div><div class="card fade-in fade-in-d2" style="text-align:center"><div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#d0d8c0,#b8c8a0);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:700">ДТ</div><div style="font-weight:700">Денис Тайченачев</div><div style="font-size:.78rem;color:var(--txt-dim)">Маркетолог • Севастополь</div><div style="display:flex;gap:4px;justify-content:center;margin-top:6px"><span class="tag tag-teal" style="font-size:.65rem">✅ Госуслуги</span></div><button class="btn btn-primary" style="width:100%;margin-top:10px;font-size:.8rem">Связаться</button></div></div></div>
-<div class="page" id="page-library"><h2 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;margin-bottom:16px">Библиотека</h2><div class="grid-2"><div class="card fade-in"><div class="card-title">100 инструментов для успешной жизни</div><div class="card-subtitle">Популярная тема • 617 просмотров</div></div><div class="card fade-in fade-in-d1"><div class="card-title">Социальная сеть OneUnion.ru — Нововведения</div><div class="card-subtitle">Кейс • 575 просмотров</div></div></div></div>
+<div class="page" id="page-library">
+  <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;margin-bottom:4px">Соборная база знаний <span style="font-size:.9rem;color:var(--txt-dim);font-weight:400">(Библиотека)</span></h2>
+  <p style="font-size:.82rem;color:var(--txt-dim);margin-bottom:16px">Коллективная мудрость сообщества — из дневников, проектов и экспертных материалов</p>
+
+  <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+    <button class="btn btn-primary" style="font-size:.8rem">Все</button>
+    <button class="btn btn-outline" style="font-size:.8rem">Кейсы адаптации</button>
+    <button class="btn btn-outline" style="font-size:.8rem">Методики</button>
+    <button class="btn btn-outline" style="font-size:.8rem">Бизнес</button>
+    <button class="btn btn-outline" style="font-size:.8rem">Промпты</button>
+    <button class="btn btn-outline" style="font-size:.8rem">Правовая база</button>
+  </div>
+
+  <!-- Search -->
+  <div style="margin-bottom:16px;display:flex;gap:8px">
+    <div style="flex:1;display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:24px;padding:8px 16px">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input placeholder="Семантический поиск по базе знаний..." style="border:none;background:none;outline:none;font-family:inherit;font-size:.85rem;color:var(--txt);width:100%"/>
+    </div>
+    <button class="btn btn-primary" style="font-size:.8rem;padding:8px 16px">Найти</button>
+  </div>
+
+  <div class="grid-2">
+    <div class="card fade-in" style="position:relative;overflow:hidden">
+      <div style="position:absolute;top:0;left:0;width:4px;height:100%;background:var(--emerald)"></div>
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+        <span class="tag tag-emerald" style="font-size:.65rem">✅ Верифицировано</span>
+        <span class="tag tag-blue" style="font-size:.65rem">Кейс адаптации</span>
+      </div>
+      <div class="card-title">От столярной мастерской к бизнесу: путь Ивана</div>
+      <div class="card-subtitle">Автор: Иван Сергеев • 📓 Из дневника • 617 просмотров</div>
+      <div style="display:flex;gap:8px;margin-top:8px;font-size:.72rem;color:var(--txt-dim)">
+        <span>👍 42</span><span>💬 8</span><span>📌 15 сохранений</span>
+      </div>
+    </div>
+    <div class="card fade-in fade-in-d1" style="position:relative;overflow:hidden">
+      <div style="position:absolute;top:0;left:0;width:4px;height:100%;background:var(--violet)"></div>
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+        <span class="tag tag-violet" style="font-size:.65rem">Методика</span>
+        <span class="tag tag-gold" style="font-size:.65rem">⭐ Популярное</span>
+      </div>
+      <div class="card-title">100 инструментов для успешной жизни</div>
+      <div class="card-subtitle">Автор: Ольга Сергеева • 575 просмотров</div>
+    </div>
+    <div class="card fade-in fade-in-d2" style="position:relative;overflow:hidden">
+      <div style="position:absolute;top:0;left:0;width:4px;height:100%;background:var(--warm)"></div>
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+        <span class="tag tag-warm" style="font-size:.65rem">Бизнес-знания</span>
+        <span class="tag tag-emerald" style="font-size:.65rem">✅ Верифицировано</span>
+      </div>
+      <div class="card-title">Модель 50/25/20/5: практическое руководство</div>
+      <div class="card-subtitle">Коллективная работа • 5 авторов • 📋 Из проекта</div>
+    </div>
+    <div class="card fade-in fade-in-d3" style="position:relative;overflow:hidden">
+      <div style="position:absolute;top:0;left:0;width:4px;height:100%;background:var(--blue)"></div>
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+        <span class="tag tag-blue" style="font-size:.65rem">Правовая база</span>
+      </div>
+      <div class="card-title">Гранты и льготы для участников СВО — 2026</div>
+      <div class="card-subtitle">Автор: Координатор • Обновлено 20 фев</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ PAGE: DIARY ═══════ -->
+<div class="page" id="page-diary">
+  <div class="grid-main">
+    <div>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;margin-bottom:4px">Дневник <span style="font-size:.9rem;color:var(--txt-dim);font-weight:400">(Личная рефлексия)</span></h2>
+      <p style="font-size:.82rem;color:var(--txt-dim);margin-bottom:16px">Записи обогащают слой КУДА и участвуют в предиктивном сопоставлении</p>
+
+      <!-- New entry -->
+      <div class="card fade-in" style="margin-bottom:16px;border-color:rgba(249,115,22,.2)">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <div style="font-size:1.2rem">✏️</div>
+          <span style="font-weight:700;font-size:.92rem">Новая запись</span>
+        </div>
+        <textarea style="width:100%;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:12px;font-family:inherit;font-size:.88rem;resize:vertical;min-height:80px;outline:none;background:var(--bg)" placeholder="Запиши мысль, инсайт, сон, исследование..."></textarea>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:10px">
+          <button class="chat-mic" style="flex-shrink:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg></button>
+          <div style="display:flex;gap:4px;flex:1">
+            <span class="tag tag-blue" style="cursor:pointer;font-size:.68rem">💰 Ресурсы</span>
+            <span class="tag tag-emerald" style="cursor:pointer;font-size:.68rem">🙏 Здоровье</span>
+            <span class="tag tag-rose" style="cursor:pointer;font-size:.68rem">❤️ Отношения</span>
+          </div>
+          <div style="display:flex;gap:4px">
+            <span title="Приватный" style="cursor:pointer;font-size:1.1rem;opacity:.5">🔒</span>
+            <span title="Для matching" style="cursor:pointer;font-size:1.1rem;opacity:1">🔗</span>
+            <span title="Публичный" style="cursor:pointer;font-size:1.1rem;opacity:.5">🌍</span>
+          </div>
+          <button class="btn btn-primary" style="font-size:.8rem;padding:6px 16px;flex-shrink:0">Сохранить</button>
+        </div>
+      </div>
+
+      <!-- Diary entries -->
+      <div class="card fade-in fade-in-d1" style="margin-bottom:12px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:1rem">💡</span>
+            <span style="font-size:.72rem;color:var(--txt-dim)">22 февраля 2026, 23:14</span>
+          </div>
+          <div style="display:flex;gap:4px;align-items:center">
+            <span style="font-size:.78rem" title="Для matching">🔗</span>
+            <span class="tag tag-blue" style="font-size:.6rem">💰 Ресурсы</span>
+          </div>
+        </div>
+        <div style="font-size:.88rem;line-height:1.6;color:var(--txt)">
+          Приснилась нейросеть из людей — каждый человек как нейрон, и координатор соединяет их по смыслу, а не по ключевым словам. Утром понял: это же суть нашей платформы! Координатор должен «знать» контекст жизни, не только навыки. Четвёртый слой профиля...
+        </div>
+        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
+          <span class="tag tag-orange" style="font-size:.6rem">нейросеть</span>
+          <span class="tag tag-orange" style="font-size:.6rem">координация</span>
+          <span class="tag tag-orange" style="font-size:.6rem">AI</span>
+        </div>
+        <div style="margin-top:6px;font-size:.72rem;color:var(--txt-dim)">→ Обновлено в слое КУДА</div>
+      </div>
+
+      <div class="card fade-in fade-in-d2" style="margin-bottom:12px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:1rem">🎙️</span>
+            <span style="font-size:.72rem;color:var(--txt-dim)">20 февраля 2026, 09:45 • Голос → текст</span>
+          </div>
+          <div style="display:flex;gap:4px;align-items:center">
+            <span style="font-size:.78rem" title="Публичный">🌍</span>
+            <span class="tag tag-emerald" style="font-size:.6rem">🙏 Здоровье</span>
+          </div>
+        </div>
+        <div style="font-size:.88rem;line-height:1.6;color:var(--txt)">
+          Размышляю о балансе трёх опор. Последние недели фокус был на ресурсах — проект, разработка, финансирование. Но здоровье «просело» — нужно вернуть утренние практики. Координатор правильно подсказывает про отдых...
+        </div>
+        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
+          <span class="tag tag-orange" style="font-size:.6rem">баланс</span>
+          <span class="tag tag-orange" style="font-size:.6rem">здоровье</span>
+          <span class="tag tag-orange" style="font-size:.6rem">практики</span>
+        </div>
+        <div style="margin-top:6px;padding:6px 10px;background:var(--emerald-soft);border-radius:var(--radius-sm);font-size:.72rem;color:var(--emerald)">📖 Опубликовано в Соборной базе знаний</div>
+      </div>
+
+      <div class="card fade-in fade-in-d3" style="margin-bottom:12px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:1rem">📝</span>
+            <span style="font-size:.72rem;color:var(--txt-dim)">18 февраля 2026, 14:30</span>
+          </div>
+          <div style="display:flex;gap:4px;align-items:center">
+            <span style="font-size:.78rem" title="Приватный">🔒</span>
+            <span class="tag tag-rose" style="font-size:.6rem">❤️ Отношения</span>
+          </div>
+        </div>
+        <div style="font-size:.88rem;line-height:1.6;color:var(--txt)">
+          Разговор с Игорем Кизымой о будущем кооператива. Важно привлекать не только практиков, но и людей с философским мышлением. Может быть, организовать серию встреч по книге...
+        </div>
+        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
+          <span class="tag tag-orange" style="font-size:.6rem">кооператив</span>
+          <span class="tag tag-orange" style="font-size:.6rem">философия</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right sidebar -->
+    <div>
+      <!-- Balance of 3 pillars -->
+      <div class="card fade-in" style="margin-bottom:14px">
+        <div class="card-title">Баланс трёх опор</div>
+        <div class="card-subtitle">На основе записей дневника</div>
+        <div style="margin-top:10px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+            <span style="font-size:.82rem;width:80px">💰 Ресурсы</span>
+            <div class="progress" style="flex:1"><div class="progress-fill" style="width:75%;background:var(--blue)"></div></div>
+            <span style="font-size:.82rem;font-weight:700;color:var(--blue)">75%</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+            <span style="font-size:.82rem;width:80px">🙏 Здоровье</span>
+            <div class="progress" style="flex:1"><div class="progress-fill" style="width:40%;background:var(--red)"></div></div>
+            <span style="font-size:.82rem;font-weight:700;color:var(--red)">40%</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:.82rem;width:80px">❤️ Отношения</span>
+            <div class="progress" style="flex:1"><div class="progress-fill" style="width:60%;background:var(--warm)"></div></div>
+            <span style="font-size:.82rem;font-weight:700;color:var(--warm)">60%</span>
+          </div>
+        </div>
+        <div style="margin-top:10px;padding:8px 10px;background:var(--red-soft);border-radius:var(--radius-sm);font-size:.78rem;color:var(--txt-dim)">
+          🧭 <b style="color:var(--red)">Координатор:</b> Опора «Здоровье» ниже 50%. Рекомендация: утренняя практика, мануальный терапевт Ирина (91% match)
+        </div>
+      </div>
+
+      <!-- Predictive matches -->
+      <div class="card fade-in fade-in-d1" style="margin-bottom:14px">
+        <div class="card-title">Предиктивные совпадения</div>
+        <div class="card-subtitle">Из пересечений дневников</div>
+        <div style="margin-top:8px">
+          <div style="padding:8px 10px;background:rgba(249,115,22,.05);border:1px solid rgba(249,115,22,.1);border-radius:var(--radius-sm);margin-bottom:6px">
+            <div style="display:flex;align-items:center;gap:6px">
+              <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#c8d8c0,#a8c8a0);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700">СВ</div>
+              <div style="flex:1">
+                <div style="font-weight:700;font-size:.82rem">Сергей Волков</div>
+                <div style="font-size:.68rem;color:var(--txt-dim)">КУДА совпадение: <b style="color:#f97316">91%</b></div>
+              </div>
+            </div>
+            <div style="font-size:.72rem;color:var(--txt-dim);margin-top:4px">Тема: кооперативная экономика, децентрализация</div>
+            <div style="display:flex;gap:6px;margin-top:6px">
+              <button class="btn btn-primary" style="font-size:.68rem;padding:3px 10px">Познакомиться</button>
+              <button class="btn btn-outline" style="font-size:.68rem;padding:3px 10px">Позже</button>
+            </div>
+          </div>
+          <div style="padding:8px 10px;background:rgba(139,92,246,.05);border:1px solid rgba(139,92,246,.1);border-radius:var(--radius-sm)">
+            <div style="display:flex;align-items:center;gap:6px">
+              <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#d8c8e0,#c0a8d0);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700">ЕК</div>
+              <div style="flex:1">
+                <div style="font-weight:700;font-size:.82rem">Елена Козлова</div>
+                <div style="font-size:.68rem;color:var(--txt-dim)">КУДА совпадение: <b style="color:var(--violet)">82%</b></div>
+              </div>
+            </div>
+            <div style="font-size:.72rem;color:var(--txt-dim);margin-top:4px">Тема: воспитание через поколение, нейропедагогика</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Diary stats -->
+      <div class="card fade-in fade-in-d2" style="margin-bottom:14px">
+        <div class="card-title">Статистика дневника</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
+          <div style="text-align:center;padding:8px;background:var(--bg);border-radius:var(--radius-sm)">
+            <div style="font-size:1.4rem;font-weight:800;font-family:'Cormorant Garamond',serif;color:var(--teal)">12</div>
+            <div style="font-size:.68rem;color:var(--txt-dim)">записей</div>
+          </div>
+          <div style="text-align:center;padding:8px;background:var(--bg);border-radius:var(--radius-sm)">
+            <div style="font-size:1.4rem;font-weight:800;font-family:'Cormorant Garamond',serif;color:#f97316">3</div>
+            <div style="font-size:.68rem;color:var(--txt-dim)">совпадения</div>
+          </div>
+          <div style="text-align:center;padding:8px;background:var(--bg);border-radius:var(--radius-sm)">
+            <div style="font-size:1.4rem;font-weight:800;font-family:'Cormorant Garamond',serif;color:var(--emerald)">2</div>
+            <div style="font-size:.68rem;color:var(--txt-dim)">в базе знаний</div>
+          </div>
+          <div style="text-align:center;padding:8px;background:var(--bg);border-radius:var(--radius-sm)">
+            <div style="font-size:1.4rem;font-weight:800;font-family:'Cormorant Garamond',serif;color:var(--gold)">+18 ТА</div>
+            <div style="font-size:.68rem;color:var(--txt-dim)">заработано</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formats of co-creation -->
+      <div class="card fade-in fade-in-d3">
+        <div class="card-title">Форматы со-творчества</div>
+        <div style="margin-top:8px;font-size:.82rem;color:var(--txt-dim)">
+          <div style="padding:4px 0">🤝 Совместные исследования</div>
+          <div style="padding:4px 0">💬 Мастермайнд-группы</div>
+          <div style="padding:4px 0">🎓 Круглые столы</div>
+          <div style="padding:4px 0">🗺 Экспедиции</div>
+          <div style="padding:4px 0">📖 Коллективные работы</div>
+          <div style="padding:4px 0">📋 → Проект на платформе</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 </div><!-- /content -->
 </div><!-- /main -->
@@ -1141,6 +1588,7 @@ function showPage(id, navEl) {
   if (navEl) navEl.classList.add('active');
   if (id === 'coordinator') drawWheel();
   if (id === 'profile') drawWheel();
+  if (id === 'diary') {} // diary page - no special init needed
 }
 
 function toggleChat() {
